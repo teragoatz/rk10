@@ -1,0 +1,34 @@
+name: Build and Push Docker Image
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Checkout the repository
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # Log in to Docker Hub
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    # Build and push the Docker image
+    - name: Build and push Docker image
+      run: |
+        docker build -t teragoatz/rk10:${{ github.sha }} .
+        docker push teragoatz/rk10:${{ github.sha }}
+
+    # Tag the image with 'latest' and push
+    - name: Tag and push 'latest'
+      run: |
+        docker tag teragoatz/rk10:${{ github.sha }} teragoatz/rk10:latest
+        docker push teragoatz/rk10:latest

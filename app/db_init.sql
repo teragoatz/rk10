@@ -1,0 +1,4 @@
+CREATE TABLE IF NOT EXISTS hits (
+    id SERIAL PRIMARY KEY,
+    hit_time TIMESTAMP NOT NULL
+);
