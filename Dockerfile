@@ -6,10 +6,9 @@ WORKDIR /app
 
 # Copy application files
 COPY app/ /app/
-COPY requirements/run.txt /app/requirements.txt
 
 # Install dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements/run.txt
 
 # Expose the application port
 EXPOSE 5000

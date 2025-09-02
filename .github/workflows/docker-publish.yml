@@ -4,6 +4,11 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'app/**'
+      - '.github/workflows/docker-publish.yml'
+      - 'Dockerfile'
+      - 'docker-compose.yml'
 
 jobs:
   build-and-push:

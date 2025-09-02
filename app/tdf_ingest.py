@@ -56,7 +56,7 @@ class TdfIngest:
                     firstname=p.findtext("firstname"),
                     lastname=p.findtext("lastname"),
                     birthdate=self.parse_date(p.findtext("birthdate")),
-                    starter=self.parse_bool(p.findtext("starter")),
+                    starter=self.parse_bool(p.findtext("starter")) if p.findtext("starter") else False,
                     creationdate=self.parse_datetime(p.findtext("creationdate")),
                     lastmodifieddate=self.parse_datetime(p.findtext("lastmodifieddate")),
                 )
