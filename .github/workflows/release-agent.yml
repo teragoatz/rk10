@@ -5,7 +5,7 @@ on:
     branches: [main]
     paths:
       - 'agent/rk10_agent.py'
-      - '.github/workflows/build-agent.yml'
+      - '.github/workflows/release-agent.yml'
 
 jobs:
   build-windows-exe:
