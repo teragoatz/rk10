@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tournament type="2" stage="4" version="1.74" gametype="TRADING_CARD_GAME" mode="LEAGUECHALLENGE">
+	<data>
+		<name>test</name>
+		<id>12-34-567890</id>
+		<city>Vancouver</city>
+		<state>WA</state>
+		<country>United States</country>
+		<roundtime>30</roundtime>
+		<finalsroundtime>75</finalsroundtime>
+		<organizer popid="4905123" name="Kenneth Heyen"/>
+		<startdate>09/02/2025</startdate>
+		<lessswiss>false</lessswiss>
+		<autotablenumber>true</autotablenumber>
+		<overflowtablestart>12</overflowtablestart>
+	</data>
+	<timeelapsed>12816</timeelapsed>
+	<players>
+		<player userid="1234567">
+			<firstname>John</firstname>
+			<lastname>Doe</lastname>
+			<birthdate>02/27/1999</birthdate>
+			<starter>true</starter>
+			<creationdate>09/02/2025 09:54:51</creationdate>
+			<lastmodifieddate>09/02/2025 09:54:51</lastmodifieddate>
+		</player>
+		<player userid="1234522">
+			<firstname>Bubba</firstname>
+			<lastname>Gump</lastname>
+			<birthdate>02/27/2015</birthdate>
+			<starter>true</starter>
+			<creationdate>09/02/2025 09:56:22</creationdate>
+			<lastmodifieddate>09/02/2025 09:56:22</lastmodifieddate>
+		</player>
+		<player userid="1234511">
+			<firstname>Cool</firstname>
+			<lastname>Kid</lastname>
+			<birthdate>02/27/2001</birthdate>
+			<starter>true</starter>
+			<creationdate>09/02/2025 09:56:08</creationdate>
+			<lastmodifieddate>09/02/2025 09:56:08</lastmodifieddate>
+		</player>
+		<player userid="1234569">
+			<firstname>Michael</firstname>
+			<lastname>Jackson</lastname>
+			<birthdate>02/27/1987</birthdate>
+			<starter>true</starter>
+			<creationdate>09/02/2025 09:55:25</creationdate>
+			<lastmodifieddate>09/02/2025 09:55:25</lastmodifieddate>
+		</player>
+		<player userid="1234568">
+			<firstname>Billy</firstname>
+			<lastname>Joel</lastname>
+			<birthdate>02/27/1998</birthdate>
+			<starter>true</starter>
+			<creationdate>09/02/2025 09:55:06</creationdate>
+			<lastmodifieddate>09/02/2025 09:55:06</lastmodifieddate>
+		</player>
+	</players>
+	<pods>
+		<pod category="10" stage="0">
+			<poddata>
+				<startingtable>1</startingtable>
+				<playoff3rd4th>false</playoff3rd4th>
+				<subgroupcount>1</subgroupcount>
+			</poddata>
+			<subgroups>
+				<subgroup number="1">
+					<players>
+						<player userid="1234569" />
+						<player userid="1234567" />
+						<player userid="1234511" />
+						<player userid="1234522" />
+						<player userid="1234568" />
+					</players>
+				</subgroup>
+			</subgroups>
+			<rounds>
+				<round number="1" type="2" stage="6" >
+					<timeleft>1793</timeleft>
+					<matches>
+						<match outcome="5">
+							<player userid="1234568"/>
+							<timestamp>09/02/2025 10:22:35</timestamp>
+							<tablenumber>0</tablenumber>
+						</match>
+						<match outcome="2">
+							<player1 userid="1234511"/>
+							<player2 userid="1234569"/>
+							<timestamp>09/02/2025 12:04:28</timestamp>
+							<tablenumber>1</tablenumber>
+						</match>
+						<match outcome="3">
+							<player1 userid="1234567"/>
+							<player2 userid="1234522"/>
+							<timestamp>09/02/2025 12:04:30</timestamp>
+							<tablenumber>2</tablenumber>
+						</match>
+					</matches>
+				</round>
+				<round number="2" type="2" stage="6" >
+					<timeleft>1795</timeleft>
+					<matches>
+						<match outcome="5">
+							<player userid="1234511"/>
+							<timestamp>09/02/2025 12:05:06</timestamp>
+							<tablenumber>0</tablenumber>
+						</match>
+						<match outcome="2">
+							<player1 userid="1234567"/>
+							<player2 userid="1234568"/>
+							<timestamp>09/02/2025 13:55:42</timestamp>
+							<tablenumber>1</tablenumber>
+						</match>
+						<match outcome="2">
+							<player1 userid="1234569"/>
+							<player2 userid="1234522"/>
+							<timestamp>09/02/2025 13:55:44</timestamp>
+							<tablenumber>2</tablenumber>
+						</match>
+					</matches>
+				</round>
+				<round number="3" type="2" stage="2" >
+					<timeleft>1800</timeleft>
+					<matches>
+						<match outcome="5">
+							<player userid="1234567"/>
+							<timestamp>09/02/2025 13:56:11</timestamp>
+							<tablenumber>0</tablenumber>
+						</match>
+						<match outcome="0">
+							<player1 userid="1234569"/>
+							<player2 userid="1234568"/>
+							<timestamp>09/02/2025 13:56:11</timestamp>
+							<tablenumber>1</tablenumber>
+						</match>
+						<match outcome="0">
+							<player1 userid="1234511"/>
+							<player2 userid="1234522"/>
+							<timestamp>09/02/2025 13:56:11</timestamp>
+							<tablenumber>2</tablenumber>
+						</match>
+					</matches>
+				</round>
+			</rounds>
+		</pod>
+	</pods>
+	<finalsoptions>
+		<categorycut key="2">
+			<options>
+				<value>0</value>
+			</options>
+			<cut>0</cut>
+			<playercount>4</playercount>
+			<paired3rd4th>false</paired3rd4th>
+		</categorycut>
+		<categorycut key="1">
+			<options>
+				<value>0</value>
+			</options>
+			<cut>0</cut>
+			<playercount>5</playercount>
+			<paired3rd4th>false</paired3rd4th>
+		</categorycut>
+		<categorycut key="0">
+			<options>
+				<value>0</value>
+			</options>
+			<cut>0</cut>
+			<playercount>1</playercount>
+			<paired3rd4th>false</paired3rd4th>
+		</categorycut>
+	</finalsoptions>
+</tournament>

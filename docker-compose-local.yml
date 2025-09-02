@@ -4,12 +4,15 @@ services:
   app:
     build:
       context: .
+      dockerfile: Dockerfile-debug
     ports:
       - "5000:5000"
+      - "5678:5678"
     depends_on:
       - db
     environment:
       - POSTGRES_HOST=db
+      - DEBUG_ENABLED=1
     env_file:
       - .env
 
