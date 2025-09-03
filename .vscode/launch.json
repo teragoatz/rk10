@@ -2,6 +2,13 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Python Debugger: agent",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/agent/rk10_agent.py",
+      "console": "integratedTerminal"
+    },
+    {
       "name": "Python: Attach to Docker",
       "type": "debugpy",
       "request": "attach",
