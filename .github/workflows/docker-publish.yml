@@ -26,14 +26,18 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
 
-    # Build and push the Docker image
-    - name: Build and push Docker image
+    # Build and push the rk10-app image
+    - name: Build and push rk10-app image
       run: |
-        docker build -t teragoatz/rk10:${{ github.sha }} .
-        docker push teragoatz/rk10:${{ github.sha }}
+        docker build -t teragoatz/rk10-app:${{ github.sha }} -f ./app/Dockerfile .
+        docker push teragoatz/rk10-app:${{ github.sha }}
+        docker build -t teragoatz/rk10-client:${{ github.sha }} -f ./client/Dockerfile .
+        docker push teragoatz/rk10-client:${{ github.sha }}
 
     # Tag the image with 'latest' and push
     - name: Tag and push 'latest'
       run: |
-        docker tag teragoatz/rk10:${{ github.sha }} teragoatz/rk10:latest
-        docker push teragoatz/rk10:latest
+        docker tag teragoatz/rk10-app:${{ github.sha }} teragoatz/rk10-app:latest
+        docker push teragoatz/rk10-app:latest
+        docker tag teragoatz/rk10-client:${{ github.sha }} teragoatz/rk10-client:latest
+        docker push teragoatz/rk10-client:latest

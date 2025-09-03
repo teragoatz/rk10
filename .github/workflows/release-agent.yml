@@ -34,11 +34,4 @@ jobs:
           name: rk10_agent.exe
           path: dist/rk10_agent.exe
 
-      - name: Create GitHub Release
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: agent-v${{ github.run_number }}
-          name: rk10_agent.exe Release ${{ github.run_number }}
-          files: dist/rk10_agent.exe
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #TODO: create GitHub Release
