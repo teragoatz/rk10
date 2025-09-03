@@ -16,7 +16,8 @@ CREATE TABLE IF NOT EXISTS tournaments (
     startdate DATE,
     lessswiss BOOLEAN,
     autotablenumber BOOLEAN,
-    overflowtablestart INTEGER
+    overflowtablestart INTEGER,
+    is_finished BOOLEAN NOT NULL DEFAULT FALSE
 );
 
 CREATE TABLE IF NOT EXISTS players (
