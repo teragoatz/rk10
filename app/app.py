@@ -61,6 +61,24 @@ def get_tournament(tournament_id):
         return jsonify({"error": "Tournament not found"}), 404
     return jsonify(tournament.as_dict())
 
+@app.route('/tournaments', methods=['GET'])
+def list_tournaments():
+    status = request.args.get('status', 'all')
+    repo = PostgresRepository()
+    result = []
+
+    if status == 'all':
+        tournaments = repo.list(Tournament)
+    elif status == 'finished':
+        tournaments = repo.list(Tournament, is_finished=True)
+    elif status == 'incomplete':
+        tournaments = repo.list(Tournament, is_finished=False)
+
+    for t in tournaments:
+        result.append(t.as_dict())
+
+    return jsonify(result)
+
 # Database connection
 def get_db_connection():
     return psycopg2.connect(

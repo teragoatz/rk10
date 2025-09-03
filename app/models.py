@@ -21,6 +21,7 @@ class Tournament(Base):
     autotablenumber = Column(Boolean)
     overflowtablestart = Column(Integer)
     rounds = relationship("Round", back_populates="tournament", cascade="all, delete-orphan")
+    is_finished = Column(Boolean, nullable=False, default=False)
 
     def as_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}

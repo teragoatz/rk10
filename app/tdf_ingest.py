@@ -28,6 +28,7 @@ class TdfIngest:
         data = root.find("data")
         tournament_id = data.findtext("id")
         tournament = self.repo.get(Tournament, tournament_id)
+        is_finished = root.find("standings") is not None
         if not tournament:
             tournament = Tournament(
                 id=tournament_id,
@@ -43,6 +44,7 @@ class TdfIngest:
                 lessswiss=self.parse_bool(data.findtext("lessswiss")),
                 autotablenumber=self.parse_bool(data.findtext("autotablenumber")),
                 overflowtablestart=int(data.findtext("overflowtablestart")),
+                is_finished=is_finished
             )
             self.repo.add(tournament)
 
