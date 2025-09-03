@@ -65,7 +65,7 @@ def get_tournament(tournament_id):
         return jsonify({"error": "Tournament not found"}), 404
     return jsonify(tournament.as_dict())
 
-@app.route('/tournaments', methods=['GET'])
+@app.route('/api/tournaments', methods=['GET'])
 def list_tournaments():
     status = request.args.get('status', 'all')
     repo = PostgresRepository()

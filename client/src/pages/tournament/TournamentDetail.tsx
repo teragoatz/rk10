@@ -1,33 +1,20 @@
-import React from "react";
-import { useParams } from "react-router-dom";
-import Alert from "@mui/material/Alert";
-import Box from "@mui/material/Box";
-import CircularProgress from "@mui/material/CircularProgress";
-import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
-import { useGetTournament, useGetTournamentPairings } from "../../hooks";
+import React from 'react';
+import { useParams } from 'react-router-dom';
+import Alert from '@mui/material/Alert';
+import Box from '@mui/material/Box';
+import CircularProgress from '@mui/material/CircularProgress';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
+import { useGetTournament, useGetTournamentPairings } from '../../hooks';
 
 export default function TournamentDetail() {
   const { id } = useParams();
-  const {
-    data: tournament,
-    isLoading: isLoadingTournament,
-    isError: isErrorTournament,
-  } = useGetTournament(id);
-  const {
-    data: pairings,
-    isLoading: isLoadingPairings,
-    isError: isErrorPairings,
-  } = useGetTournamentPairings(id);
+  const { data: tournament, isLoading: isLoadingTournament, isError: isErrorTournament } = useGetTournament(id);
+  const { data: pairings, isLoading: isLoadingPairings, isError: isErrorPairings } = useGetTournamentPairings(id);
 
   if (isLoadingTournament || isLoadingPairings) {
     return (
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        height="100vh"
-      >
+      <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
         <CircularProgress size={100} />
       </Box>
     );
@@ -35,12 +22,7 @@ export default function TournamentDetail() {
 
   if (isErrorTournament || isErrorPairings || !tournament || !pairings) {
     return (
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        height="100vh"
-      >
+      <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
         <Alert severity="error">Error loading tournament with id {id}</Alert>
       </Box>
     );
@@ -85,7 +67,7 @@ export default function TournamentDetail() {
             {pairing.matches.map((match) => (
               <Box key={match.id} mb={2}>
                 <Typography variant="body1" key={match.id}>
-                  {match.player1_id ?? "tbd"} vs {match.player2_id ?? "tbd"}
+                  {match.player1_id ?? 'tbd'} vs {match.player2_id ?? 'tbd'}
                 </Typography>
                 <Typography variant="body1" key={match.id}>
                   Table #{match.tablenumber}

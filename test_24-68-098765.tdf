@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tournament type="2" stage="4" version="1.74" gametype="TRADING_CARD_GAME" mode="LEAGUECHALLENGE">
 	<data>
-		<name>Super Sports Cards Pokemon Masters</name>
-		<id>12-34-567890</id>
-		<city>Vancouver</city>
+		<name>Ridgefield Pokemon Masters</name>
+		<id>24-68-098765</id>
+		<city>Ridgefield</city>
 		<state>WA</state>
 		<country>United States</country>
 		<roundtime>30</roundtime>
 		<finalsroundtime>75</finalsroundtime>
-		<organizer popid="4905123" name="Kenneth Heyen"/>
-		<startdate>09/02/2025</startdate>
+		<organizer popid="4320991" name="Adriene Newell"/>
+		<startdate>09/07/2025</startdate>
 		<lessswiss>false</lessswiss>
 		<autotablenumber>true</autotablenumber>
 		<overflowtablestart>12</overflowtablestart>

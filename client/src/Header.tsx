@@ -1,0 +1,114 @@
+import React, { useState } from 'react';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import Avatar from '@mui/material/Avatar';
+import IconButton from '@mui/material/IconButton';
+import Container from '@mui/material/Container';
+import Button from '@mui/material/Button';
+import SearchIcon from '@mui/icons-material/Search';
+import PersonIcon from '@mui/icons-material/Person';
+import SearchTournamentsDialog from './SearchTournamentsDialog';
+import Paper from '@mui/material/Paper';
+
+export default function Header() {
+  const [searchDialogOpen, setSearchDialogOpen] = useState(false);
+
+  const handleSearchClick = () => {
+    setSearchDialogOpen(true);
+  };
+
+  const handleSearchDialogClose = () => {
+    setSearchDialogOpen(false);
+  };
+
+  return (
+    <Box sx={{ flexGrow: 1 }}>
+      {/* Promotional Bar */}
+      <Paper
+        elevation={0}
+        sx={{
+          backgroundColor: '#1976d2',
+          color: 'white',
+          textAlign: 'center',
+          py: 1,
+          borderRadius: 0,
+        }}
+      >
+        <Typography variant="body2" sx={{ fontWeight: 500 }}>
+          The world's most trusted TCG tournament platform.
+        </Typography>
+      </Paper>
+
+      <AppBar position="static" elevation={1}>
+        <Container maxWidth="xl">
+          <Toolbar sx={{ justifyContent: 'space-between', py: 1 }}>
+            {/* Logo */}
+            <Typography
+              variant="h4"
+              component="div"
+              sx={{
+                fontWeight: 'bold',
+                color: '#1976d2',
+                letterSpacing: '-0.5px',
+              }}
+            >
+              RK10
+            </Typography>
+
+            {/* Search Button */}
+            <Button
+              variant="outlined"
+              onClick={handleSearchClick}
+              startIcon={<SearchIcon />}
+              sx={{
+                width: '400px',
+                height: '40px',
+                justifyContent: 'flex-start',
+                textAlign: 'left',
+                color: '#666',
+                borderColor: '#e0e0e0',
+                backgroundColor: '#f5f5f5',
+                borderRadius: '25px',
+                textTransform: 'none',
+                '&:hover': {
+                  borderColor: '#1976d2',
+                  backgroundColor: '#f0f7ff',
+                },
+                '& .MuiButton-startIcon': {
+                  marginRight: '12px',
+                },
+              }}
+            >
+              Search by tournament name or location...
+            </Button>
+
+            {/* Profile Icon */}
+            <IconButton
+              sx={{
+                p: 0,
+                '&:hover': {
+                  backgroundColor: 'rgba(25, 118, 210, 0.04)',
+                },
+              }}
+            >
+              <Avatar
+                sx={{
+                  bgcolor: '#1976d2',
+                  width: 40,
+                  height: 40,
+                }}
+              >
+                <PersonIcon />
+              </Avatar>
+            </IconButton>
+          </Toolbar>
+        </Container>
+      </AppBar>
+
+      {/* Search Dialog */}
+      <SearchTournamentsDialog open={searchDialogOpen} onClose={handleSearchDialogClose} />
+    </Box>
+  );
+}
