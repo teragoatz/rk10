@@ -12,7 +12,7 @@ import Box from '@mui/material/Box';
 // import "@fontsource/ubuntu-mono/400-italic.css";
 import Container from '@mui/material/Container';
 import CircularProgress from '@mui/material/CircularProgress';
-import Header from './Header';
+import Header from './header/Header';
 
 const Home = lazy(() => import('./pages/home/Home'));
 const TournamentDetail = lazy(() => import('./pages/tournament/TournamentDetail'));

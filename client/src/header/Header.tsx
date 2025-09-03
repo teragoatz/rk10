@@ -9,11 +9,16 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import SearchIcon from '@mui/icons-material/Search';
 import PersonIcon from '@mui/icons-material/Person';
-import SearchTournamentsDialog from './SearchTournamentsDialog';
 import Paper from '@mui/material/Paper';
+import SearchTournamentsDialog from './SearchTournamentsDialog';
+import LoginWithPlayerIdDialog from './LoginWithPlayerIdDialog';
+import LogoutDialog from './LogoutDialog';
 
 export default function Header() {
   const [searchDialogOpen, setSearchDialogOpen] = useState(false);
+  const [loginWithPlayerIdDialogOpen, setLoginWithPlayerIdDialogOpen] = useState(false);
+  const [logoutDialogOpen, setLogoutDialogOpen] = useState(false);
+  const playerId = localStorage.getItem('playerId');
 
   const handleSearchClick = () => {
     setSearchDialogOpen(true);
@@ -23,9 +28,24 @@ export default function Header() {
     setSearchDialogOpen(false);
   };
 
+  const handleLoginWithPlayerIdClick = () => {
+    if (playerId) {
+      setLogoutDialogOpen(true);
+    } else {
+      setLoginWithPlayerIdDialogOpen(true);
+    }
+  };
+
+  const handleLoginWithPlayerIdDialogClose = () => {
+    setLoginWithPlayerIdDialogOpen(false);
+  };
+
+  const handleLogoutDialogClose = () => {
+    setLogoutDialogOpen(false);
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
-      {/* Promotional Bar */}
       <Paper
         elevation={0}
         sx={{
@@ -92,6 +112,7 @@ export default function Header() {
                   backgroundColor: 'rgba(25, 118, 210, 0.04)',
                 },
               }}
+              onClick={handleLoginWithPlayerIdClick}
             >
               <Avatar
                 sx={{
@@ -107,8 +128,11 @@ export default function Header() {
         </Container>
       </AppBar>
 
-      {/* Search Dialog */}
       <SearchTournamentsDialog open={searchDialogOpen} onClose={handleSearchDialogClose} />
+      <LoginWithPlayerIdDialog open={loginWithPlayerIdDialogOpen} onClose={handleLoginWithPlayerIdDialogClose} />
+      {playerId && (
+        <LogoutDialog open={logoutDialogOpen} onClose={handleLogoutDialogClose} playerId={playerId} />
+      )}
     </Box>
   );
 }
