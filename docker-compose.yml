@@ -20,5 +20,14 @@ services:
       - db_data:/var/lib/postgresql/data
       - ./app/db_init.sql:/docker-entrypoint-initdb.d/db_init.sql
 
+  frontend:
+    build:
+      context: ./client
+      dockerfile: Dockerfile  # Uses Apache for production
+    ports:
+      - "80:80"
+    depends_on:
+      - app
+
 volumes:
   db_data:

@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, request
+from flask_cors import CORS
 import psycopg2
 from datetime import datetime
 import os
@@ -14,6 +15,9 @@ if os.getenv("DEBUG_ENABLED") == "1":
     # debugpy.wait_for_client()
 
 app = Flask(__name__)
+
+CLIENT_URL = os.getenv("RK10_CLIENT_URL", "http://localhost:3000")
+CORS(app, resources={r"/*": {"origins": [CLIENT_URL]}})
 
 ALLOWED_EXTENSIONS = {'tdf'}
 
