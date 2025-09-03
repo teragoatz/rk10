@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, request
+from flask_cors import CORS
 import psycopg2
 from datetime import datetime
 import os
@@ -15,13 +16,16 @@ if os.getenv("DEBUG_ENABLED") == "1":
 
 app = Flask(__name__)
 
+CLIENT_URL = os.getenv("RK10_CLIENT_URL", "http://localhost:3000")
+CORS(app, resources={r"/*": {"origins": [CLIENT_URL]}})
+
 ALLOWED_EXTENSIONS = {'tdf'}
 
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-@app.route('/upload-tdf', methods=['POST'])
+@app.route('/api/upload-tdf', methods=['POST'])
 def upload_tdf():
     if 'file' not in request.files:
         return jsonify({"error": "No file part"}), 400
@@ -41,7 +45,7 @@ def upload_tdf():
     else:
         return jsonify({"error": "Invalid file type. Only .tdf files are allowed."}), 400
 
-@app.route('/tournament/<tournament_id>/pairings', methods=['GET'])
+@app.route('/api/tournament/<tournament_id>/pairings', methods=['GET'])
 def get_tournament_pairings(tournament_id):
     repo = PostgresRepository()
     rounds = repo.list(Round, tournament_id=tournament_id)
@@ -53,7 +57,7 @@ def get_tournament_pairings(tournament_id):
         result.append(round_dict)
     return jsonify(result)
 
-@app.route('/tournament/<tournament_id>', methods=['GET'])
+@app.route('/api/tournament/<tournament_id>', methods=['GET'])
 def get_tournament(tournament_id):
     repo = PostgresRepository()
     tournament = repo.get(Tournament, tournament_id)

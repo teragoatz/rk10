@@ -9,7 +9,7 @@ import os
 import json
 
 # Update the default URL here to the public one once it's available
-API_URL = os.getenv("RK10_API_URL", "http://localhost:5000")
+API_URL = os.getenv("RK10_API_URL", "http://localhost:5000/api")
 CONFIG_FILE = "agent_config.json"
 
 class FolderChangeHandler(FileSystemEventHandler):
