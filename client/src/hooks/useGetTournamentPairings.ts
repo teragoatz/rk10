@@ -1,6 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import { API_URL } from '../constants';
 
 interface TournamentPairing {
   id: number;
@@ -23,7 +22,7 @@ interface TournamentPairings {
 }
 
 async function getTournamentPairings(tournamentId: string): Promise<TournamentPairings[]> {
-  const response = await axios.get(`${API_URL}/tournament/${tournamentId}/pairings`);
+  const response = await axios.get(`/api/tournament/${tournamentId}/pairings`);
   return response.data;
 }
 

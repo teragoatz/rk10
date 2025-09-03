@@ -7,6 +7,7 @@ services:
       - "5000:5000"
     environment:
       - POSTGRES_HOST=db
+      - RK10_CLIENT_HOST=client
     env_file:
       - .env
 
@@ -20,7 +21,7 @@ services:
       - db_data:/var/lib/postgresql/data
       - ./app/db_init.sql:/docker-entrypoint-initdb.d/db_init.sql
 
-  frontend:
+  client:
     build:
       context: ./client
       dockerfile: Dockerfile  # Uses Apache for production
