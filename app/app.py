@@ -67,9 +67,7 @@ def list_tournaments():
     repo = PostgresRepository()
     result = []
 
-    if status == 'all':
-        tournaments = repo.list(Tournament)
-    elif status == 'finished':
+    if status == 'finished':
         tournaments = repo.list(Tournament, is_finished=True)
     elif status == 'incomplete':
         tournaments = repo.list(Tournament, is_finished=False)
