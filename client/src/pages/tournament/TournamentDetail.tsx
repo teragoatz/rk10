@@ -15,6 +15,7 @@ export default function TournamentDetail() {
   const { id } = useParams();
   const { data: tournament, isLoading: isLoadingTournament, isError: isErrorTournament } = useGetTournament(id);
   const { data: pairings, isLoading: isLoadingPairings, isError: isErrorPairings } = useGetTournamentPairings(id);
+  const playerId = localStorage.getItem('playerId');
 
   if (isLoadingTournament || isLoadingPairings) {
     return (
@@ -48,7 +49,7 @@ export default function TournamentDetail() {
         <Paper elevation={1} sx={{ p: 3 }}>
           <Typography variant="h4" gutterBottom>Pairings</Typography>
           {pairings && pairings.length > 0 && (
-            <Pairings pairings={pairings} />
+            <Pairings pairings={pairings} playerId={playerId} />
           )}
         </Paper>
       </Container>

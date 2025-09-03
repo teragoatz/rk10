@@ -8,10 +8,16 @@ import { TournamentPairings } from '../../hooks';
 
 interface PairingsProps {
   pairings: TournamentPairings[];
+  playerId: string | null;
 }
 
-export default function Pairings({ pairings }: PairingsProps) {
+export default function Pairings({ pairings, playerId }: PairingsProps) {
   const [activeTab, setActiveTab] = useState(0);
+
+  const pairingsWithPlayerId = playerId ? pairings.map((pairing) => ({
+    ...pairing,
+    matches: pairing.matches.filter((match) => match.player1_id === playerId || match.player2_id === playerId),
+  })) : pairings;
 
   return (
     <Box>
@@ -22,12 +28,12 @@ export default function Pairings({ pairings }: PairingsProps) {
         scrollButtons="auto"
         sx={{ borderBottom: 1, borderColor: 'divider', mb: 2 }}
       >
-        {pairings.map((pairing) => (
+        {pairingsWithPlayerId.map((pairing) => (
           <Tab key={`tab-${pairing.number}`} label={`Round ${pairing.number}`} sx={{ minWidth: 120 }} />
         ))}
       </Tabs>
 
-      {pairings.map((pairing, index) => (
+      {pairingsWithPlayerId.map((pairing, index) => (
         <Box
           key={`panel-${pairing.number}`}
           role="tabpanel"

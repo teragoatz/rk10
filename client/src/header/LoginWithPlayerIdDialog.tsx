@@ -26,6 +26,7 @@ export default function LoginWithPlayerIdDialog({ open, onClose }: LoginWithPlay
   const handlePlayerIdClick = () => {
     if (inputText.length >= 7) {
       localStorage.setItem('playerId', inputText);
+      window.location.reload();
       onClose();
     } else {
       setError('Invalid player ID, must be at least 7 characters long');
@@ -34,14 +35,21 @@ export default function LoginWithPlayerIdDialog({ open, onClose }: LoginWithPlay
 
   useEffect(() => {
     setError('');
-    if (inputRef.current) {
-      inputRef.current.focus();
+    if (open) {
+      // Use requestAnimationFrame to ensure DOM is ready
+      const focusInput = () => {
+        if (inputRef.current) {
+          inputRef.current.focus();
+        }
+      };
+
+      requestAnimationFrame(focusInput);
     }
   }, [open]);
 
   return (
     <Dialog open={open} onClose={onClose} fullScreen>
-      <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <DialogTitle sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
         <IconButton
           aria-label="close"
           onClick={onClose}
@@ -49,7 +57,7 @@ export default function LoginWithPlayerIdDialog({ open, onClose }: LoginWithPlay
             color: (theme) => theme.palette.grey[500],
           }}
         >
-          <CloseIcon />
+          <CloseIcon sx={{ fontSize: 36 }} />
         </IconButton>
       </DialogTitle>
       <DialogContent>
@@ -70,7 +78,6 @@ export default function LoginWithPlayerIdDialog({ open, onClose }: LoginWithPlay
               placeholder="Enter your player ID..."
               variant="outlined"
               size="medium"
-              autoFocus
               fullWidth
               inputRef={inputRef}
               onChange={(e) => setInputText(e.target.value)}
@@ -84,7 +91,7 @@ export default function LoginWithPlayerIdDialog({ open, onClose }: LoginWithPlay
                 },
               }}
             />
-            <Button variant="contained" onClick={handlePlayerIdClick} fullWidth sx={{ mt: 4 }}>
+            <Button variant="contained" size="large" onClick={handlePlayerIdClick} fullWidth sx={{ mt: 4 }}>
               Login
             </Button>
             {error && (

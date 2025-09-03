@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -27,6 +27,7 @@ interface SearchTournamentsDialogProps {
 export default function SearchTournamentsDialog({ open, onClose }: SearchTournamentsDialogProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [includeFinished, setIncludeFinished] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
 
   const { data: tournamentList, isLoading, isError } = useGetTournamentList(includeFinished ? 'all' : 'incomplete');
@@ -52,6 +53,19 @@ export default function SearchTournamentsDialog({ open, onClose }: SearchTournam
     onClose();
   };
 
+  useEffect(() => {
+    if (open) {
+      // Use requestAnimationFrame to ensure DOM is ready
+      const focusInput = () => {
+        if (inputRef.current) {
+          inputRef.current.focus();
+        }
+      };
+      
+      requestAnimationFrame(focusInput);
+    }
+  }, [open]);
+
   function renderDialogContent() {
     if (isLoading) {
       return <CircularProgress size={100} />;
@@ -68,6 +82,7 @@ export default function SearchTournamentsDialog({ open, onClose }: SearchTournam
           variant="outlined"
           size="medium"
           fullWidth
+          inputRef={inputRef}
           onChange={(e) => setSearchQuery(e.target.value)}
           slotProps={{
             input: {
@@ -143,7 +158,7 @@ export default function SearchTournamentsDialog({ open, onClose }: SearchTournam
             color: (theme) => theme.palette.grey[500],
           }}
         >
-          <CloseIcon />
+          <CloseIcon sx={{ fontSize: 36 }} />
         </IconButton>
       </DialogTitle>
       <DialogContent>{renderDialogContent()}</DialogContent>

@@ -1,13 +1,9 @@
-import React, { useState } from 'react';
-import TextField from '@mui/material/TextField';
+import React from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
-import InputAdornment from '@mui/material/InputAdornment';
-import PersonIcon from '@mui/icons-material/Person';
 import CloseIcon from '@mui/icons-material/Close';
 import Box from '@mui/material/Box';
-import Alert from '@mui/material/Alert';
 import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
@@ -21,6 +17,7 @@ interface LogoutDialogProps {
 export default function LogoutDialog({ open, onClose, playerId }: LogoutDialogProps) {
   const handleLogoutClick = () => {
     localStorage.removeItem('playerId');
+    window.location.reload();
     onClose();
   };
 
@@ -34,7 +31,7 @@ export default function LogoutDialog({ open, onClose, playerId }: LogoutDialogPr
             color: (theme) => theme.palette.grey[500],
           }}
         >
-          <CloseIcon />
+          <CloseIcon sx={{ fontSize: 36 }} />
         </IconButton>
       </DialogTitle>
       <DialogContent>
@@ -48,9 +45,16 @@ export default function LogoutDialog({ open, onClose, playerId }: LogoutDialogPr
           }}
         >
           <Typography variant="h5" sx={{ fontWeight: 500, mb: 2 }}>
-            You are logged in with Player ID: {playerId}
+            You are logged in with Player ID:{' '}
+            <span style={{ fontWeight: 700, color: 'green', fontSize: '1.75rem' }}>{playerId}</span>
           </Typography>
-          <Button variant="contained" onClick={handleLogoutClick} fullWidth sx={{ mt: 2, maxWidth: '400px' }}>
+          <Button
+            variant="contained"
+            size="large"
+            onClick={handleLogoutClick}
+            fullWidth
+            sx={{ mt: 2, maxWidth: '400px' }}
+          >
             Logout
           </Button>
         </Box>
