@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
-interface TournamentPairing {
+export interface TournamentPairing {
   id: number;
   outcome: number;
   tablenumber: number;
@@ -11,7 +11,7 @@ interface TournamentPairing {
   round_id: number;
 }
 
-interface TournamentPairings {
+export interface TournamentPairings {
   id: number;
   matches: TournamentPairing[];
   number: number;

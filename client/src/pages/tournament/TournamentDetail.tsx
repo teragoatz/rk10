@@ -3,10 +3,13 @@ import { useParams } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
+import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { useGetTournament, useGetTournamentPairings } from '../../hooks';
 import Banner from './Banner';
+import Pairings from './Pairings';
+import { Paper } from '@mui/material';
 
 export default function TournamentDetail() {
   const { id } = useParams();
@@ -33,51 +36,22 @@ export default function TournamentDetail() {
     <Box>
       <Banner tournament={tournament} />
 
-      <Box mb={2}>
-        <Stack direction="column" spacing={2}>
-          <Typography variant="body1">
-            Location: {tournament?.city}, {tournament?.state}, {tournament?.country}
-          </Typography>
-          <Typography variant="body1">Start date: {tournament?.startdate}</Typography>
-        </Stack>
-      </Box>
-      <Box mb={2}>
-        <Typography variant="h3">Pairings</Typography>
-        {pairings?.map((pairing) => (
-          <Box key={`pairing-${pairing.number}`} mb={2}>
-            <Typography variant="h5">
-              Round #{pairing.number}
-            </Typography>
+      <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+        <Box mb={4}>
+          <Stack direction="column" spacing={2}>
             <Typography variant="body1">
-              Stage {pairing.stage}
+              Location: {tournament?.city}, {tournament?.state}, {tournament?.country}
             </Typography>
-            <Typography variant="body1">
-              Time left {pairing.timeleft}
-            </Typography>
-            <Typography variant="body1">
-              Type {pairing.type}
-            </Typography>
-            <Typography variant="h6">
-              Matches
-            </Typography>
-            {pairing.matches.map((match) => (
-              <Box key={`match-${match.id}`} mb={2}>
-                <Typography variant="body1">
-                  {match.player1_id ?? 'tbd'} vs {match.player2_id ?? 'tbd'}
-                </Typography>
-                <Typography variant="body1">
-                  Table #{match.tablenumber}
-                </Typography>
-                {!!match.outcome && (
-                  <Typography variant="body1">
-                    Outcome: {match.outcome}
-                  </Typography>
-                )}
-              </Box>
-            ))}
-          </Box>
-        ))}
-      </Box>
+            <Typography variant="body1">Organized by: {tournament?.organizer_name}</Typography>
+          </Stack>
+        </Box>
+        <Paper elevation={1} sx={{ p: 3 }}>
+          <Typography variant="h4" gutterBottom>Pairings</Typography>
+          {pairings && pairings.length > 0 && (
+            <Pairings pairings={pairings} />
+          )}
+        </Paper>
+      </Container>
     </Box>
   );
 }
