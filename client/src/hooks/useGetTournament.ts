@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
-interface Tournament {
+export interface Tournament {
   id: string;
   name: string;
   organizer_name: string;
@@ -18,13 +18,14 @@ interface Tournament {
 }
 
 async function getTournament(tournamentId: string): Promise<Tournament> {
-  const response = await axios.get(`/api/tournament/${tournamentId}`);
+  // const response = await axios.get(`/api/tournament/${tournamentId}`);
+  const response = await axios.get(`http://localhost:5000/api/tournament/${tournamentId}`);
   return response.data;
 }
 
 export function useGetTournament(tournamentId?: string) {
   return useQuery<Tournament | undefined, Error>({
-    queryKey: ['tournaments'],
+    queryKey: ['tournament', tournamentId],
     queryFn: () => {
       if (!tournamentId) {
         return;

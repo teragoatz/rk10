@@ -6,6 +6,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { useGetTournament, useGetTournamentPairings } from '../../hooks';
+import Banner from './Banner';
 
 export default function TournamentDetail() {
   const { id } = useParams();
@@ -30,50 +31,45 @@ export default function TournamentDetail() {
 
   return (
     <Box>
+      <Banner tournament={tournament} />
+
       <Box mb={2}>
         <Stack direction="column" spacing={2}>
-          <Typography variant="h1">{tournament?.name}</Typography>
           <Typography variant="body1">
             Location: {tournament?.city}, {tournament?.state}, {tournament?.country}
           </Typography>
-          <Typography variant="body1">Organizer: {tournament?.organizer_name}</Typography>
           <Typography variant="body1">Start date: {tournament?.startdate}</Typography>
-          {/* <Typography variant="body1">{tournament?.lessswiss}</Typography>
-          <Typography variant="body1">{tournament?.autotablenumber}</Typography>
-          <Typography variant="body1">
-            {tournament?.overflowtablestart}
-          </Typography> */}
         </Stack>
       </Box>
       <Box mb={2}>
         <Typography variant="h3">Pairings</Typography>
         {pairings?.map((pairing) => (
-          <Box key={pairing.number} mb={2}>
-            <Typography variant="h5" key={pairing.number}>
+          <Box key={`pairing-${pairing.number}`} mb={2}>
+            <Typography variant="h5">
               Round #{pairing.number}
             </Typography>
-            <Typography variant="body1" key={pairing.number}>
+            <Typography variant="body1">
               Stage {pairing.stage}
             </Typography>
-            <Typography variant="body1" key={pairing.number}>
+            <Typography variant="body1">
               Time left {pairing.timeleft}
             </Typography>
-            <Typography variant="body1" key={pairing.number}>
+            <Typography variant="body1">
               Type {pairing.type}
             </Typography>
-            <Typography variant="h6" key={pairing.number}>
+            <Typography variant="h6">
               Matches
             </Typography>
             {pairing.matches.map((match) => (
-              <Box key={match.id} mb={2}>
-                <Typography variant="body1" key={match.id}>
+              <Box key={`match-${match.id}`} mb={2}>
+                <Typography variant="body1">
                   {match.player1_id ?? 'tbd'} vs {match.player2_id ?? 'tbd'}
                 </Typography>
-                <Typography variant="body1" key={match.id}>
+                <Typography variant="body1">
                   Table #{match.tablenumber}
                 </Typography>
                 {!!match.outcome && (
-                  <Typography variant="body1" key={match.id}>
+                  <Typography variant="body1">
                     Outcome: {match.outcome}
                   </Typography>
                 )}

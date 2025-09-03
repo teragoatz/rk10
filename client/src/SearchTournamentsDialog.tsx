@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -26,6 +27,7 @@ interface SearchTournamentsDialogProps {
 export default function SearchTournamentsDialog({ open, onClose }: SearchTournamentsDialogProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [includeFinished, setIncludeFinished] = useState(false);
+  const navigate = useNavigate();
 
   const { data: tournamentList, isLoading, isError } = useGetTournamentList(includeFinished ? 'all' : 'incomplete');
 
@@ -44,6 +46,11 @@ export default function SearchTournamentsDialog({ open, onClose }: SearchTournam
       ) ?? []
     );
   }, [tournamentList, searchQuery]);
+
+  const handleTournamentClick = (tournamentId: string) => {
+    navigate(`/tournament/${tournamentId}`);
+    onClose();
+  };
 
   function renderDialogContent() {
     if (isLoading) {
@@ -86,12 +93,19 @@ export default function SearchTournamentsDialog({ open, onClose }: SearchTournam
               {filteredTournamentList.map((tournament) => (
                 <ListItem
                   key={tournament.id}
+                  onClick={() => handleTournamentClick(tournament.id)}
                   sx={{
+                    pt: 4,
                     pb: 4,
                     borderBottom: '1px solid #e0e0e0',
                     alignItems: 'flex-start',
                     flexDirection: 'column',
-                    mb: 4,
+                    cursor: 'pointer',
+                    borderRadius: 1,
+                    transition: 'background-color 0.2s ease-in-out',
+                    '&:hover': {
+                      backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                    },
                   }}
                 >
                   <Box
