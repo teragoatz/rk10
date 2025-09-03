@@ -71,9 +71,10 @@ def list_tournaments():
         tournaments = repo.list(Tournament)
     elif status == 'finished':
         tournaments = repo.list(Tournament, is_finished=True)
+    elif status == 'incomplete':
         tournaments = repo.list(Tournament, is_finished=False)
     else:
-        tournaments = []
+        tournaments = repo.list(Tournament)
 
     for t in tournaments:
         result.append(t.as_dict())
