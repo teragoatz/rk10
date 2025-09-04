@@ -22,8 +22,8 @@ export interface TournamentPairings {
 }
 
 async function getTournamentPairings(tournamentId: string): Promise<TournamentPairings[]> {
-  // const response = await axios.get(`/api/tournament/${tournamentId}/pairings`);
-  const response = await axios.get(`http://localhost:5000/api/tournament/${tournamentId}/pairings`);
+  const response = await axios.get(`/api/tournament/${tournamentId}/pairings`);
+  // const response = await axios.get(`http://localhost:5000/api/tournament/${tournamentId}/pairings`);
   return response.data;
 }
 

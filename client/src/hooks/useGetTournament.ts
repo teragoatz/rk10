@@ -18,8 +18,8 @@ export interface Tournament {
 }
 
 async function getTournament(tournamentId: string): Promise<Tournament> {
-  // const response = await axios.get(`/api/tournament/${tournamentId}`);
-  const response = await axios.get(`http://localhost:5000/api/tournament/${tournamentId}`);
+  const response = await axios.get(`/api/tournament/${tournamentId}`);
+  // const response = await axios.get(`http://localhost:5000/api/tournament/${tournamentId}`);
   return response.data;
 }
 
