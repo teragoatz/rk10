@@ -29,9 +29,9 @@ jobs:
     # Build and push the rk10-app image
     - name: Build and push rk10-app image
       run: |
-        docker build -t teragoatz/rk10-app:${{ github.sha }} -f ./app/Dockerfile .
+        docker build -t teragoatz/rk10-app:${{ github.sha }} -f ./app/Dockerfile app
         docker push teragoatz/rk10-app:${{ github.sha }}
-        docker build -t teragoatz/rk10-client:${{ github.sha }} -f ./client/Dockerfile .
+        docker build -t teragoatz/rk10-client:${{ github.sha }} -f ./client/Dockerfile client
         docker push teragoatz/rk10-client:${{ github.sha }}
 
     # Tag the image with 'latest' and push
