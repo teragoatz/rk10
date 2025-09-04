@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -65,17 +66,23 @@ export default function Header() {
         <Container maxWidth="xl">
           <Toolbar sx={{ justifyContent: 'space-between', py: 1 }}>
             {/* Logo */}
-            <Typography
-              variant="h4"
-              component="div"
-              sx={{
-                fontWeight: 'bold',
-                color: '#1976d2',
-                letterSpacing: '-0.5px',
-              }}
-            >
-              RK10
-            </Typography>
+            <Link to="/" style={{ textDecoration: 'none' }}>
+              <Typography
+                variant="h4"
+                component="div"
+                sx={{
+                  fontWeight: 'bold',
+                  color: '#1976d2',
+                  letterSpacing: '-0.5px',
+                  cursor: 'pointer',
+                  '&:hover': {
+                    color: '#1565c0',
+                  },
+                }}
+              >
+                RK10
+              </Typography>
+            </Link>
 
             {/* Search Button */}
             <Button
@@ -130,9 +137,7 @@ export default function Header() {
 
       <SearchTournamentsDialog open={searchDialogOpen} onClose={handleSearchDialogClose} />
       <LoginWithPlayerIdDialog open={loginWithPlayerIdDialogOpen} onClose={handleLoginWithPlayerIdDialogClose} />
-      {playerId && (
-        <LogoutDialog open={logoutDialogOpen} onClose={handleLogoutDialogClose} playerId={playerId} />
-      )}
+      {playerId && <LogoutDialog open={logoutDialogOpen} onClose={handleLogoutDialogClose} playerId={playerId} />}
     </Box>
   );
 }
