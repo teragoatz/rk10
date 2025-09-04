@@ -4,7 +4,7 @@ import psycopg2
 from datetime import datetime
 import os
 from werkzeug.utils import secure_filename
-from models import Match, Round, Tournament
+from models import Match, Player, Round, Tournament
 from tdf_ingest import TdfIngest
 from repository import PostgresRepository
 
@@ -52,8 +52,24 @@ def get_tournament_pairings(tournament_id):
     result = []
     for rnd in rounds:
         matches = repo.list(Match, round_id=rnd.id)
+        match_list = []
+        for m in matches:
+            player1 = repo.get(Player, m.player1_id) if m.player1_id else None
+            player2 = repo.get(Player, m.player2_id) if m.player2_id else None
+            match_dict = m.as_dict()
+            match_dict["player1"] = {
+                "id": m.player1_id,
+                "firstname": player1.firstname if player1 else None,
+                "lastname": player1.lastname if player1 else None
+            }
+            match_dict["player2"] = {
+                "id": m.player2_id,
+                "firstname": player2.firstname if player2 else None,
+                "lastname": player2.lastname if player2 else None
+            }
+            match_list.append(match_dict)
         round_dict = rnd.as_dict()
-        round_dict["matches"] = [m.as_dict() for m in matches]
+        round_dict["matches"] = match_list
         result.append(round_dict)
     return jsonify(result)
 
@@ -65,7 +81,7 @@ def get_tournament(tournament_id):
         return jsonify({"error": "Tournament not found"}), 404
     return jsonify(tournament.as_dict())
 
-@app.route('/tournaments', methods=['GET'])
+@app.route('/api/tournaments', methods=['GET'])
 def list_tournaments():
     status = request.args.get('status', 'all')
     repo = PostgresRepository()

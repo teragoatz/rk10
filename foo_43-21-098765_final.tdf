@@ -1,29 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tournament type="2" stage="4" version="1.74" gametype="TRADING_CARD_GAME" mode="LEAGUECHALLENGE">
+<tournament type="2" stage="5" version="1.74" gametype="TRADING_CARD_GAME" mode="LEAGUECHALLENGE">
 	<data>
-		<name>Super Sports Cards Pokemon Masters</name>
-		<id>12-34-567890</id>
-		<city>Vancouver</city>
+		<name>foo</name>
+		<id>43-21-098765</id>
+		<city>Ridgefield</city>
 		<state>WA</state>
 		<country>United States</country>
 		<roundtime>30</roundtime>
 		<finalsroundtime>75</finalsroundtime>
 		<organizer popid="4905123" name="Kenneth Heyen"/>
-		<startdate>09/02/2025</startdate>
+		<startdate>09/03/2025</startdate>
 		<lessswiss>false</lessswiss>
 		<autotablenumber>true</autotablenumber>
 		<overflowtablestart>12</overflowtablestart>
 	</data>
-	<timeelapsed>12816</timeelapsed>
+	<timeelapsed>1766</timeelapsed>
 	<players>
-		<player userid="1234567">
-			<firstname>John</firstname>
-			<lastname>Doe</lastname>
-			<birthdate>02/27/1999</birthdate>
-			<starter>true</starter>
-			<creationdate>09/02/2025 09:54:51</creationdate>
-			<lastmodifieddate>09/02/2025 09:54:51</lastmodifieddate>
-		</player>
 		<player userid="1234522">
 			<firstname>Bubba</firstname>
 			<lastname>Gump</lastname>
@@ -40,14 +32,6 @@
 			<creationdate>09/02/2025 09:56:08</creationdate>
 			<lastmodifieddate>09/02/2025 09:56:08</lastmodifieddate>
 		</player>
-		<player userid="1234569">
-			<firstname>Michael</firstname>
-			<lastname>Jackson</lastname>
-			<birthdate>02/27/1987</birthdate>
-			<starter>true</starter>
-			<creationdate>09/02/2025 09:55:25</creationdate>
-			<lastmodifieddate>09/02/2025 09:55:25</lastmodifieddate>
-		</player>
 		<player userid="1234568">
 			<firstname>Billy</firstname>
 			<lastname>Joel</lastname>
@@ -55,6 +39,22 @@
 			<starter>true</starter>
 			<creationdate>09/02/2025 09:55:06</creationdate>
 			<lastmodifieddate>09/02/2025 09:55:06</lastmodifieddate>
+		</player>
+		<player userid="1234567">
+			<firstname>John</firstname>
+			<lastname>Doe</lastname>
+			<birthdate>02/27/1999</birthdate>
+			<starter>true</starter>
+			<creationdate>09/02/2025 09:54:51</creationdate>
+			<lastmodifieddate>09/02/2025 09:54:51</lastmodifieddate>
+		</player>
+		<player userid="1234569">
+			<firstname>Michael</firstname>
+			<lastname>Jackson</lastname>
+			<birthdate>02/27/1987</birthdate>
+			<starter>true</starter>
+			<creationdate>09/02/2025 09:55:25</creationdate>
+			<lastmodifieddate>09/02/2025 09:55:25</lastmodifieddate>
 		</player>
 	</players>
 	<pods>
@@ -67,77 +67,77 @@
 			<subgroups>
 				<subgroup number="1">
 					<players>
-						<player userid="1234569" />
-						<player userid="1234567" />
 						<player userid="1234511" />
+						<player userid="1234569" />
 						<player userid="1234522" />
+						<player userid="1234567" />
 						<player userid="1234568" />
 					</players>
 				</subgroup>
 			</subgroups>
 			<rounds>
 				<round number="1" type="2" stage="6" >
-					<timeleft>1793</timeleft>
+					<timeleft>1784</timeleft>
 					<matches>
 						<match outcome="5">
-							<player userid="1234568"/>
-							<timestamp>09/02/2025 10:22:35</timestamp>
+							<player userid="1234522"/>
+							<timestamp>09/03/2025 22:28:37</timestamp>
 							<tablenumber>0</tablenumber>
 						</match>
-						<match outcome="2">
-							<player1 userid="1234511"/>
-							<player2 userid="1234569"/>
-							<timestamp>09/02/2025 12:04:28</timestamp>
+						<match outcome="1">
+							<player1 userid="1234569"/>
+							<player2 userid="1234568"/>
+							<timestamp>09/03/2025 22:30:51</timestamp>
 							<tablenumber>1</tablenumber>
 						</match>
-						<match outcome="3">
+						<match outcome="2">
 							<player1 userid="1234567"/>
-							<player2 userid="1234522"/>
-							<timestamp>09/02/2025 12:04:30</timestamp>
+							<player2 userid="1234511"/>
+							<timestamp>09/03/2025 22:30:53</timestamp>
 							<tablenumber>2</tablenumber>
 						</match>
 					</matches>
 				</round>
 				<round number="2" type="2" stage="6" >
-					<timeleft>1795</timeleft>
+					<timeleft>1796</timeleft>
 					<matches>
 						<match outcome="5">
-							<player userid="1234511"/>
-							<timestamp>09/02/2025 12:05:06</timestamp>
+							<player userid="1234568"/>
+							<timestamp>09/03/2025 22:30:59</timestamp>
 							<tablenumber>0</tablenumber>
 						</match>
-						<match outcome="2">
-							<player1 userid="1234567"/>
-							<player2 userid="1234568"/>
-							<timestamp>09/02/2025 13:55:42</timestamp>
+						<match outcome="1">
+							<player1 userid="1234569"/>
+							<player2 userid="1234511"/>
+							<timestamp>09/03/2025 22:57:48</timestamp>
 							<tablenumber>1</tablenumber>
 						</match>
-						<match outcome="2">
-							<player1 userid="1234569"/>
-							<player2 userid="1234522"/>
-							<timestamp>09/02/2025 13:55:44</timestamp>
+						<match outcome="3">
+							<player1 userid="1234522"/>
+							<player2 userid="1234567"/>
+							<timestamp>09/03/2025 22:57:50</timestamp>
 							<tablenumber>2</tablenumber>
 						</match>
 					</matches>
 				</round>
-				<round number="3" type="2" stage="2" >
-					<timeleft>1800</timeleft>
+				<round number="3" type="2" stage="8" >
+					<timeleft>1797</timeleft>
 					<matches>
 						<match outcome="5">
 							<player userid="1234567"/>
-							<timestamp>09/02/2025 13:56:11</timestamp>
+							<timestamp>09/03/2025 22:57:55</timestamp>
 							<tablenumber>0</tablenumber>
 						</match>
-						<match outcome="0">
-							<player1 userid="1234569"/>
+						<match outcome="2">
+							<player1 userid="1234511"/>
 							<player2 userid="1234568"/>
-							<timestamp>09/02/2025 13:56:11</timestamp>
+							<timestamp>09/03/2025 22:58:00</timestamp>
 							<tablenumber>1</tablenumber>
 						</match>
-						<match outcome="0">
-							<player1 userid="1234511"/>
+						<match outcome="1">
+							<player1 userid="1234569"/>
 							<player2 userid="1234522"/>
-							<timestamp>09/02/2025 13:56:11</timestamp>
+							<timestamp>09/03/2025 22:58:01</timestamp>
 							<tablenumber>2</tablenumber>
 						</match>
 					</matches>
@@ -145,6 +145,25 @@
 			</rounds>
 		</pod>
 	</pods>
+	<standings>
+		<pod category="2" type="finished">
+			<player id="1234569" place="1" />
+			<player id="1234568" place="2" />
+			<player id="1234567" place="3" />
+			<player id="1234511" place="4" />
+		</pod>
+		<pod category="2" type="dnf">
+		</pod>
+		<pod category="1" type="finished">
+		</pod>
+		<pod category="1" type="dnf">
+		</pod>
+		<pod category="0" type="finished">
+			<player id="1234522" place="1" />
+		</pod>
+		<pod category="0" type="dnf">
+		</pod>
+	</standings>
 	<finalsoptions>
 		<categorycut key="2">
 			<options>
