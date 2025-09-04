@@ -33,9 +33,6 @@ services:
     ports:
       - "3000:3000"
       - "80:80"
-    volumes:
-      - ./client:/fe
-      - /fe/node_modules  # Preserve node_modules
     environment:
       - CHOKIDAR_USEPOLLING=true  # Enable hot reloading
     depends_on:
