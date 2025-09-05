@@ -63,6 +63,18 @@ class TdfIngest:
                     lastmodifieddate=self.parse_datetime(p.findtext("lastmodifieddate")),
                 )
                 self.repo.add(player)
+            else:
+                player.firstname = p.findtext("firstname")
+                player.lastname = p.findtext("lastname")
+                player.birthdate = self.parse_date(p.findtext("birthdate"))
+                player.starter = self.parse_bool(p.findtext("starter")) if p.findtext("starter") else False
+                player.lastmodifieddate = self.parse_datetime(p.findtext("lastmodifieddate"))
+                self.repo.update(Player, userid,
+                                 firstname=player.firstname,
+                                 lastname=player.lastname,
+                                 birthdate=player.birthdate,
+                                 starter=player.starter,
+                                 lastmodifieddate=player.lastmodifieddate)
 
         # Rounds, Pods, Matches
         pods = root.find("pods")

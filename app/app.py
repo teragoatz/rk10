@@ -57,16 +57,14 @@ def get_tournament_pairings(tournament_id):
             player1 = repo.get(Player, m.player1_id) if m.player1_id else None
             player2 = repo.get(Player, m.player2_id) if m.player2_id else None
             match_dict = m.as_dict()
-            match_dict["player1"] = {
-                "id": m.player1_id,
-                "firstname": player1.firstname if player1 else None,
-                "lastname": player1.lastname if player1 else None
-            }
-            match_dict["player2"] = {
-                "id": m.player2_id,
-                "firstname": player2.firstname if player2 else None,
-                "lastname": player2.lastname if player2 else None
-            }
+            match_dict["player1_name"] = {
+                "first": player1.firstname,
+                "last": player1.lastname
+            } if player1 and player1.tc_consent else None
+            match_dict["player2_name"] = {
+                "first": player2.firstname,
+                "last": player2.lastname
+            } if player2 and player2.tc_consent else None
             match_list.append(match_dict)
         round_dict = rnd.as_dict()
         round_dict["matches"] = match_list
@@ -98,6 +96,16 @@ def list_tournaments():
         result.append(t.as_dict())
 
     return jsonify(result)
+
+@app.route('/api/player/<player_id>/consent', methods=['POST'])
+def set_player_consent(player_id):
+    data = request.get_json()
+    consent = data.get('consent', True)  # Default to True if not provided
+    repo = PostgresRepository()
+    player = repo.set_player_consent(player_id, consent=bool(consent))
+    if not player:
+        return jsonify({"error": "Player not found"}), 404
+    return jsonify({"message": f"Updated consent for {player_id}"}), 200
 
 # Database connection
 def get_db_connection():
