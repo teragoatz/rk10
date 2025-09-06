@@ -9,7 +9,7 @@ import os
 import json
 
 # Update the default URL here to the public one once it's available
-API_URL = os.getenv("RK10_API_URL", "http://localhost:5000/api")
+API_URL = os.getenv("RK10_API_URL", "https://rk10.onclickllc.com/api")
 print(f"Using API URL: {API_URL}")
 CONFIG_FILE = "agent_config.json"
 

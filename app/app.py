@@ -100,7 +100,7 @@ def list_tournaments():
 @app.route('/api/player/<player_id>/consent', methods=['POST'])
 def set_player_consent(player_id):
     data = request.get_json()
-    consent = data.get('consent', True)  # Default to True if not provided
+    consent = data.get('consent', False)  # Default to False if not provided
     repo = PostgresRepository()
     player = repo.set_player_consent(player_id, consent=bool(consent))
     return jsonify({"message": f"Updated consent for {player_id}"}), 200
