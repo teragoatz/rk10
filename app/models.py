@@ -29,10 +29,12 @@ class Tournament(Base):
 class Player(Base):
     __tablename__ = 'players'
     userid = Column(String(20), primary_key=True)
-    firstname = Column(String(100), nullable=False)
-    lastname = Column(String(100), nullable=False)
+    firstname = Column(String(100))
+    lastname = Column(String(100))
     birthdate = Column(Date)
     starter = Column(Boolean)
+    tc_consent = Column(Boolean, nullable=False, default=False)
+    tc_consent_timestamp = Column(DateTime)
     creationdate = Column(DateTime)
     lastmodifieddate = Column(DateTime)
 

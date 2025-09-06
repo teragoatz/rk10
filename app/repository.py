@@ -1,3 +1,4 @@
+from datetime import datetime
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy.exc import SQLAlchemyError
@@ -55,6 +56,25 @@ class PostgresRepository:
                 setattr(obj, key, value)
             session.commit()
             return obj
+        except SQLAlchemyError as e:
+            session.rollback()
+            raise e
+        finally:
+            session.close()
+
+    def set_player_consent(self, player_id, consent=True):
+        session = self.Session()
+        try:
+            player = session.get(Player, player_id)
+            if not player:
+                player = Player(userid=player_id,
+                                creationdate=datetime.now(),
+                                lastmodifieddate=datetime.now())
+                session.add(player)
+            player.tc_consent = consent
+            player.tc_consent_timestamp = datetime.now()
+            session.commit()
+            return player
         except SQLAlchemyError as e:
             session.rollback()
             raise e
