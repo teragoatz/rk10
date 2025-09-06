@@ -103,8 +103,6 @@ def set_player_consent(player_id):
     consent = data.get('consent', True)  # Default to True if not provided
     repo = PostgresRepository()
     player = repo.set_player_consent(player_id, consent=bool(consent))
-    if not player:
-        return jsonify({"error": "Player not found"}), 404
     return jsonify({"message": f"Updated consent for {player_id}"}), 200
 
 # Database connection
