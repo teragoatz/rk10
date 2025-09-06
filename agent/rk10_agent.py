@@ -16,6 +16,7 @@ CONFIG_FILE = "agent_config.json"
 class FolderChangeHandler(FileSystemEventHandler):
     def __init__(self):
         self.file_mtimes = {}
+        self.api_token = None
 
     def on_modified(self, event):
         if not event.is_directory and event.src_path.lower().endswith('.tdf'):
@@ -28,29 +29,30 @@ class FolderChangeHandler(FileSystemEventHandler):
                 try:
                     with open(filepath, 'rb') as f:
                         files = {'file': (os.path.basename(filepath), f, 'application/octet-stream')}
-                        response = requests.post(f"{API_URL}/upload-tdf", files=files)
+                        headers = {'Authorization': f'Bearer {self.api_token}'} if self.api_token else {}
+                        response = requests.post(f"{API_URL}/upload-tdf", files=files, headers=headers)
                         print(f"Upload response: {response.status_code} {response.text}")
                 except Exception as e:
                     print(f"Error uploading file: {e}")
 
-def get_persisted_folder():
+def get_persisted_config():
     if os.path.exists(CONFIG_FILE):
         try:
             with open(CONFIG_FILE, "r") as f:
                 data = json.load(f)
                 folder = data.get("folder_path")
-                if folder and os.path.isdir(folder):
-                    return folder
+                api_token = data.get("api_token")
+                return folder, api_token
         except Exception:
             pass
-    return None
+    return None, None
 
-def persist_folder(folder_path):
+def persist_config(folder_path, api_token):
     with open(CONFIG_FILE, "w") as f:
-        json.dump({"folder_path": folder_path}, f)
+        json.dump({"folder_path": folder_path, "api_token": api_token}, f)
 
 def select_folder_and_watch():
-    folder_path = get_persisted_folder()
+    folder_path, api_token = get_persisted_config()
     if not folder_path:
         root = tk.Tk()
         root.withdraw()
@@ -58,10 +60,18 @@ def select_folder_and_watch():
         if not folder_path:
             messagebox.showinfo("No folder selected", "No folder was selected. Exiting.")
             return
-        persist_folder(folder_path)
+    if not api_token:
+        root = tk.Tk()
+        root.withdraw()
+        api_token = tk.simpledialog.askstring("API Token", "Enter your API token:")
+        if not api_token:
+            messagebox.showinfo("No token entered", "No API token was entered. Exiting.")
+            return
+    persist_config(folder_path, api_token)
 
     print(f"Monitoring folder: {folder_path}")
     event_handler = FolderChangeHandler()
+    event_handler.api_token = api_token  # Pass token to handler
     observer = Observer()
     observer.schedule(event_handler, path=folder_path, recursive=False)
     observer.start()
