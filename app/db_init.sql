@@ -22,10 +22,12 @@ CREATE TABLE IF NOT EXISTS tournaments (
 
 CREATE TABLE IF NOT EXISTS players (
     userid VARCHAR(20) PRIMARY KEY,
-    firstname VARCHAR(100) NOT NULL,
-    lastname VARCHAR(100) NOT NULL,
+    firstname VARCHAR(100),
+    lastname VARCHAR(100),
     birthdate DATE,
     starter BOOLEAN,
+    tc_consent BOOLEAN NOT NULL DEFAULT FALSE,
+    tc_consent_timestamp TIMESTAMP,
     creationdate TIMESTAMP,
     lastmodifieddate TIMESTAMP
 );

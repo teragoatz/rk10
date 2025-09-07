@@ -31,7 +31,7 @@ jobs:
       run: |
         docker build -t teragoatz/rk10-app:${{ github.sha }} -f ./app/Dockerfile app
         docker push teragoatz/rk10-app:${{ github.sha }}
-        docker build -t teragoatz/rk10-client:${{ github.sha }} -f ./client/Dockerfile client
+        docker build --build-arg API_TOKEN=${{ secrets.API_TOKEN }} -t teragoatz/rk10-client:${{ github.sha }} -f ./client/Dockerfile client
         docker push teragoatz/rk10-client:${{ github.sha }}
 
     # Tag the image with 'latest' and push
