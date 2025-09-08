@@ -38,5 +38,14 @@ services:
     depends_on:
       - app
 
+  services:
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    environment:
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+    ports:
+      - "8080:8080"
+
 volumes:
   db_data:
