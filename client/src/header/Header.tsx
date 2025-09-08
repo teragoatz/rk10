@@ -75,6 +75,7 @@ export default function Header() {
                   color: '#1976d2',
                   letterSpacing: '-0.5px',
                   cursor: 'pointer',
+                  fontSize: { xs: '1.75rem', sm: '2.125rem' },
                   '&:hover': {
                     color: '#1565c0',
                   },
@@ -90,25 +91,42 @@ export default function Header() {
               onClick={handleSearchClick}
               startIcon={<SearchIcon />}
               sx={{
-                width: '400px',
+                width: { xs: '180px', sm: '400px' },
                 height: '40px',
                 justifyContent: 'flex-start',
                 textAlign: 'left',
                 color: '#666',
                 borderColor: '#e0e0e0',
                 backgroundColor: '#f5f5f5',
-                borderRadius: '25px',
+                borderRadius: '5px',
                 textTransform: 'none',
+                padding: { xs: '0 12px', sm: '0 16px' },
                 '&:hover': {
                   borderColor: '#1976d2',
                   backgroundColor: '#f0f7ff',
                 },
                 '& .MuiButton-startIcon': {
-                  marginRight: '12px',
+                  marginRight: { xs: '4px', sm: '12px' },
                 },
               }}
             >
-              Search by tournament name or location...
+              <Box
+                sx={{
+                  display: { xs: 'block', sm: 'none' },
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                Search tournaments
+              </Box>
+              <Box
+                sx={{
+                  display: { xs: 'none', sm: 'block' },
+                }}
+              >
+                Search by tournament name or location...
+              </Box>
             </Button>
 
             {/* Profile Icon */}
