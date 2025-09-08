@@ -30,11 +30,13 @@ services:
     build:
       context: ./client
       dockerfile: Dockerfile
+      args:
+        API_TOKEN: ${API_TOKEN}
     ports:
       - "3000:3000"
       - "80:80"
-    environment:
-      - CHOKIDAR_USEPOLLING=true  # Enable hot reloading
+    env_file:
+      - .env
     depends_on:
       - app
 

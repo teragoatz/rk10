@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
+import axios from '../api';
 import { Tournament } from './useGetTournament';
 
 async function getTournamentList(status: string): Promise<Tournament[]> {
