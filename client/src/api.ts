@@ -7,7 +7,7 @@ axios.interceptors.request.use(config => {
         config.headers = config.headers || {};
         config.headers['Authorization'] = `Bearer ${API_TOKEN}`;
     }
-return config;
+    return config;
 });
 
 export default axios;
