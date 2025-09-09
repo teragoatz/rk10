@@ -47,6 +47,23 @@ class TdfIngest:
                 is_finished=is_finished
             )
             self.repo.add(tournament)
+        else:
+            self.repo.update(
+                Tournament, tournament_id,
+                name=data.findtext("name"),
+                city=data.findtext("city"),
+                state=data.findtext("state"),
+                country=data.findtext("country"),
+                roundtime=int(data.findtext("roundtime")),
+                finalsroundtime=int(data.findtext("finalsroundtime")),
+                organizer_popid=data.find("organizer").attrib.get("popid"),
+                organizer_name=data.find("organizer").attrib.get("name"),
+                startdate=self.parse_date(data.findtext("startdate")),
+                lessswiss=self.parse_bool(data.findtext("lessswiss")),
+                autotablenumber=self.parse_bool(data.findtext("autotablenumber")),
+                overflowtablestart=int(data.findtext("overflowtablestart")),
+                is_finished=is_finished
+            )
 
         # Players
         for p in root.find("players").findall("player"):

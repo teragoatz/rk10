@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import Typography from '@mui/material/Typography';
@@ -43,18 +42,6 @@ export default function Pairings({ pairings, playerId }: PairingsProps) {
         >
           {activeTab === index && (
             <Box>
-              <Stack direction="row" spacing={4} mb={2}>
-                <Typography variant="body1">
-                  <strong>Stage:</strong> {pairing.stage}
-                </Typography>
-                <Typography variant="body1">
-                  <strong>Time left:</strong> {pairing.timeleft}
-                </Typography>
-                <Typography variant="body1">
-                  <strong>Type:</strong> {pairing.type}
-                </Typography>
-              </Stack>
-
               <Typography variant="h6" gutterBottom>
                 Matches
               </Typography>
@@ -72,14 +59,47 @@ export default function Pairings({ pairings, playerId }: PairingsProps) {
                   }}
                 >
                   <Typography variant="body1" gutterBottom>
-                    <strong>{match.player1_id ?? 'TBD'}</strong> vs <strong>{match.player2_id ?? 'TBD'}</strong>
+                    <strong
+                      style={
+                        match.outcome === 1
+                          ? { color: 'green' }
+                          : match.outcome === 3
+                          ? { color: 'yellow' }
+                          : {}
+                      }
+                    >
+                      {match.player1_name && match.player1_name.first && match.player1_name.last
+                        ? `${match.player1_name.first} ${match.player1_name.last}`
+                        : match.player1_id ?? 'TBD'}
+                    </strong>
+                    {match.outcome !== 5 && (
+                      <>
+                        {' vs '}
+                        <strong
+                          style={
+                            match.outcome === 2
+                              ? { color: 'green' }
+                              : match.outcome === 3
+                              ? { color: 'yellow' }
+                              : {}
+                          }
+                        >
+                          {match.player2_name && match.player2_name.first && match.player2_name.last
+                            ? `${match.player2_name.first} ${match.player2_name.last}`
+                            : match.player2_id ?? ''}
+                        </strong>
+                      </>
+                    )}
+                    {match.outcome === 5 && (
+                      <span style={{ color: 'orange', marginLeft: 8 }}><strong>BYE</strong></span>
+                    )}
+                    {match.outcome === 3 && (
+                      <span style={{ color: 'yellow', marginLeft: 8 }}><strong>TIE</strong></span>
+                    )}
                   </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    Table #{match.tablenumber}
-                  </Typography>
-                  {!!match.outcome && (
-                    <Typography variant="body2" color="success.main" sx={{ mt: 1 }}>
-                      <strong>Outcome:</strong> {match.outcome}
+                  {match.tablenumber !== 0 && (
+                    <Typography variant="body2" color="text.secondary">
+                      Table #{match.tablenumber}
                     </Typography>
                   )}
                 </Box>
