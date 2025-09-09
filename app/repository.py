@@ -2,7 +2,7 @@ from datetime import datetime
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy.exc import SQLAlchemyError
-from models import Base, Tournament, Player, Round, Match
+from models import Base, MatchOutcomeSelection, Tournament, Player, Round, Match
 import os
 
 class PostgresRepository:
@@ -91,6 +91,65 @@ class PostgresRepository:
             session.commit()
             return True
         except SQLAlchemyError as e:
+            session.rollback()
+            raise e
+        finally:
+            session.close()
+
+    def select_match_outcome(self, match_id, player_id, outcome):
+        session = self.Session()
+        try:
+            # Verify player is part of the match
+            match = session.query(Match).get(match_id)
+            if not match or (player_id != match.player1_id and player_id != match.player2_id):
+                raise ValueError("Player is not associated with this match.")
+        
+            # Upsert selection
+            selection = session.query(MatchOutcomeSelection).filter_by(
+                match_id=match_id, player_id=player_id
+            ).first()
+            if selection:
+                selection.outcome = outcome
+                selection.timestamp = datetime.utcnow()
+            else:
+                selection = MatchOutcomeSelection(
+                    match_id=match_id,
+                    player_id=player_id,
+                    outcome=outcome,
+                    timestamp=datetime.utcnow()
+                )
+                session.add(selection)
+            session.commit()
+
+            # Check if both players have selected the same outcome
+            selections = session.query(MatchOutcomeSelection).filter_by(match_id=match_id).all()
+            if len(selections) == 2 and selections[0].outcome == selections[1].outcome:
+                # Both players agree, update match outcome
+                match = session.query(Match).get(match_id)
+                match.outcome = selections[0].outcome
+                session.commit()
+                return True, selections[0].outcome
+            return False, None
+        except Exception as e:
+            session.rollback()
+            raise e
+        finally:
+            session.close()
+
+    def sync_match_outcome(self, match_id):
+        session = self.Session()
+        try:
+            # Get agreed outcome from selections
+            selections = session.query(MatchOutcomeSelection).filter_by(match_id=match_id).all()
+            if len(selections) == 2 and selections[0].outcome == selections[1].outcome:
+                agreed_outcome = selections[0].outcome
+                match = session.query(Match).get(match_id)
+                if match and match.outcome != agreed_outcome:
+                    match.outcome = agreed_outcome
+                    session.commit()
+                    return True
+            return False
+        except Exception as e:
             session.rollback()
             raise e
         finally:

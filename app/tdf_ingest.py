@@ -22,6 +22,8 @@ class TdfIngest:
         except Exception:
             return None
 
+    # This is messy but works for now
+    # TODO: Refactor into smaller methods
     def ingest(self, xml_content: str):
         root = ET.fromstring(xml_content)
         # Tournament data
@@ -134,15 +136,12 @@ class TdfIngest:
                                 player2_id = match_elem.find("player2").attrib["userid"]
 
                             # Check if match exists
-                            existing = [
-                                m for m in self.repo.list(
-                                    Match,
-                                    round_id=round_obj.id,
-                                    player1_id=player1_id,
-                                    player2_id=player2_id,
-                                    tablenumber=tablenumber
-                                )
-                            ]
+                            existing = next(iter(self.repo.list(Match,
+                                                                round_id=round_obj.id,
+                                                                player1_id=player1_id,
+                                                                player2_id=player2_id,
+                                                                tablenumber=tablenumber)), None)
+
                             if not existing:
                                 match = Match(
                                     round_id=round_obj.id,
@@ -154,7 +153,15 @@ class TdfIngest:
                                 )
                                 self.repo.add(match)
                             else:
-                                match = existing[0]
-                                match.outcome = outcome
-                                match.timestamp = timestamp
-                                self.repo.update(Match, match.id, outcome=outcome, timestamp=timestamp)
+                                existing.outcome = outcome
+                                existing.timestamp = timestamp
+                                self.repo.update(Match, existing.id, outcome=outcome, timestamp=timestamp)
+                            
+                            # Fix any outcome discrepancies
+                            match = next(iter(self.repo.list(Match,
+                                                                round_id=round_obj.id,
+                                                                player1_id=player1_id,
+                                                                player2_id=player2_id,
+                                                                tablenumber=tablenumber)), None)
+                            if match:
+                                self.repo.sync_match_outcome(match.id)
