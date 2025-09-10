@@ -39,8 +39,8 @@ export default function TournamentDetail() {
       {/* <Banner tournament={tournament} /> */}
 
       <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-        <Typography variant="h2">{tournament.name}</Typography>
-        <Typography variant="h5">Start Date: {formatDate(tournament.startdate)}</Typography>
+        <Typography variant="h2" sx={{ mb: 2 }}>{tournament.name}</Typography>
+        <Typography variant="h5">{formatDate(tournament.startdate)}</Typography>
         <Box mb={4}>
           <Stack direction="column" spacing={2}>
             <Typography variant="body1">
@@ -49,7 +49,7 @@ export default function TournamentDetail() {
             <Typography variant="body1">Organized by: {tournament?.organizer_name}</Typography>
           </Stack>
         </Box>
-        <Paper elevation={1} sx={{ p: 3 }}>
+        <Paper elevation={1} sx={{ p: 3, maxWidth: 'sm' }}>
           <Typography variant="h4" gutterBottom>Pairings</Typography>
           {pairings && pairings.length > 0 && (
             <Pairings pairings={pairings} playerId={playerId} />
