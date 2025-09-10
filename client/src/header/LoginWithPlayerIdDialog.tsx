@@ -31,7 +31,6 @@ export default function LoginWithPlayerIdDialog({ open, onClose }: LoginWithPlay
   const handlePlayerIdClick = async () => {
     if (inputText.length >= 7) {
       try {
-        console.log('postPlayerConsent', consentChecked);
         await postPlayerConsent({ playerId: parseInt(inputText), consent: consentChecked });
         localStorage.setItem('playerId', inputText);
         window.location.reload();
