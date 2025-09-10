@@ -7,11 +7,11 @@ import Button from '@mui/material/Button';
 import Collapse from '@mui/material/Collapse';
 import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUp from '@mui/icons-material/KeyboardArrowUp';
+import Cancel from '@mui/icons-material/Cancel';
 import CheckCircle from '@mui/icons-material/CheckCircle';
 import DoDisturbOn from '@mui/icons-material/DoDisturbOn';
 import { TournamentPairing, usePostSelectOutcome } from '../../hooks';
 import { MatchOutcome, MatchOutcomeColor } from '../../util/constants';
-import { Cancel } from '@mui/icons-material';
 
 enum Player {
   Player1 = 1,
