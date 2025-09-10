@@ -1,13 +1,17 @@
 import React, { useState, useMemo, useEffect } from 'react';
+import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
+import CircularProgress from '@mui/material/CircularProgress';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Collapse from '@mui/material/Collapse';
-import { KeyboardArrowDown, KeyboardArrowUp } from '@mui/icons-material';
+import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUp from '@mui/icons-material/KeyboardArrowUp';
+import CheckCircle from '@mui/icons-material/CheckCircle';
+import DoDisturbOn from '@mui/icons-material/DoDisturbOn';
 import { TournamentPairing, usePostSelectOutcome } from '../../hooks';
 import { MatchOutcome, MatchOutcomeColor } from '../../util/constants';
-import Alert from '@mui/material/Alert';
-import CircularProgress from '@mui/material/CircularProgress';
+import { Cancel } from '@mui/icons-material';
 
 enum Player {
   Player1 = 1,
@@ -42,6 +46,63 @@ function getPlayerDisplayName(player: Player, match: TournamentPairing) {
   return match.player2_id ?? 'TBD';
 }
 
+function getMatchOutcomeIcon(player: Player, outcome: MatchOutcome) {
+  switch (outcome) {
+    case MatchOutcome.Player1Wins:
+      return player === Player.Player1 ? (
+        <CheckCircle
+          sx={{
+            ml: 1,
+            fontSize: '1.2em',
+            color: 'green',
+            verticalAlign: 'middle',
+          }}
+        />
+      ) : (
+        <Cancel
+          sx={{
+            ml: 1,
+            fontSize: '1.2em',
+            color: 'red',
+            verticalAlign: 'middle',
+          }}
+        />
+      );
+    case MatchOutcome.Player2Wins:
+      return player === Player.Player2 ? (
+        <CheckCircle
+          sx={{
+            ml: 1,
+            fontSize: '1.2em',
+            color: 'green',
+            verticalAlign: 'middle',
+          }}
+        />
+      ) : (
+        <Cancel
+          sx={{
+            ml: 1,
+            fontSize: '1.2em',
+            color: 'red',
+            verticalAlign: 'middle',
+          }}
+        />
+      );
+    case MatchOutcome.Tie:
+      return (
+        <DoDisturbOn
+          sx={{
+            ml: 1,
+            fontSize: '1.2em',
+            color: 'yellow',
+            verticalAlign: 'middle',
+          }}
+        />
+      );
+  }
+  return <></>;
+}
+
 interface MatchProps {
   playerId: string | null;
   match: TournamentPairing;
@@ -62,7 +123,7 @@ export default function Match({ match, playerId }: MatchProps) {
   const handleResolveClick = () => {
     setIsExpanded(!isExpanded);
   };
-  const { mutate: selectOutcome, isError, isPending, reset } = usePostSelectOutcome();
+  const { mutate: selectOutcome, isError, isPending, isSuccess, reset } = usePostSelectOutcome();
 
   function handleSelectOutcome(outcome: MatchOutcome, playerId: string) {
     selectOutcome({ match_id: match.id, player_id: playerId, outcome });
@@ -97,6 +158,27 @@ export default function Match({ match, playerId }: MatchProps) {
           }}
         >
           {getPlayerDisplayName(Player.Player1, match)}
+          {getMatchOutcomeIcon(Player.Player1, match.outcome)}
+          {/* {match.outcome === MatchOutcome.Player1Wins && (
+            <CheckCircle
+              sx={{
+                ml: 1,
+                fontSize: '1.2em',
+                color: 'green',
+                verticalAlign: 'middle',
+              }}
+            />
+          )}
+          {match.outcome === MatchOutcome.Tie && (
+            <DoDisturbOn
+              sx={{
+                ml: 1,
+                fontSize: '1.2em',
+                color: 'yellow',
+                verticalAlign: 'middle',
+              }}
+            />
+          )} */}
         </Typography>
         {match.outcome !== MatchOutcome.Bye && (
           <>
@@ -121,6 +203,7 @@ export default function Match({ match, playerId }: MatchProps) {
                 textAlign: 'right',
               }}
             >
+              {getMatchOutcomeIcon(Player.Player2, match.outcome)}{' '}
               {getPlayerDisplayName(Player.Player2, match)}
             </Typography>
           </>
@@ -185,7 +268,7 @@ export default function Match({ match, playerId }: MatchProps) {
             <Button
               variant="contained"
               color="success"
-              disabled={isPending}
+              disabled={isPending || isSuccess}
               sx={{
                 textTransform: 'none',
                 fontWeight: 'bold',
@@ -198,7 +281,7 @@ export default function Match({ match, playerId }: MatchProps) {
             <Button
               variant="contained"
               color="warning"
-              disabled={isPending}
+              disabled={isPending || isSuccess}
               sx={{
                 textTransform: 'none',
                 fontWeight: 'bold',
@@ -211,7 +294,7 @@ export default function Match({ match, playerId }: MatchProps) {
             <Button
               variant="contained"
               color="success"
-              disabled={isPending}
+              disabled={isPending || isSuccess}
               sx={{
                 textTransform: 'none',
                 fontWeight: 'bold',
@@ -222,7 +305,8 @@ export default function Match({ match, playerId }: MatchProps) {
               {isPending ? <CircularProgress size={20} /> : 'WINNER'}
             </Button>
           </Box>
-          {isError && <Alert severity="error">Error selecting outcome, please refresh the page and try again.</Alert>}
+          {isSuccess && <Alert sx={{ mt: 2 }} severity="success">Outcome selected successfully.</Alert>}
+          {isError && <Alert sx={{ mt: 2 }} severity="error">Error selecting outcome, please refresh the page and try again.</Alert>}
         </Collapse>
       )}
     </Box>
