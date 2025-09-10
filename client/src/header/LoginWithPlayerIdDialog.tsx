@@ -12,6 +12,9 @@ import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import { usePostPlayerConsent } from '../hooks';
 
 interface LoginWithPlayerIdDialogProps {
   open: boolean;
@@ -21,20 +24,32 @@ interface LoginWithPlayerIdDialogProps {
 export default function LoginWithPlayerIdDialog({ open, onClose }: LoginWithPlayerIdDialogProps) {
   const [inputText, setInputText] = useState('');
   const [error, setError] = useState('');
+  const [consentChecked, setConsentChecked] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const { mutateAsync: postPlayerConsent, isError, reset } = usePostPlayerConsent();
 
-  const handlePlayerIdClick = () => {
+  const handlePlayerIdClick = async () => {
     if (inputText.length >= 7) {
-      localStorage.setItem('playerId', inputText);
-      window.location.reload();
-      onClose();
-    } else {
+      try {
+        console.log('postPlayerConsent', consentChecked);
+        await postPlayerConsent({ playerId: parseInt(inputText), consent: consentChecked });
+        localStorage.setItem('playerId', inputText);
+        window.location.reload();
+        onClose();
+      } catch (error) {
+        setError(
+          'There was an unexpected error logging in with your player ID. Please refresh this page and try again.',
+        );
+      }
+    } else if (inputText.length < 7) {
       setError('Invalid player ID, must be at least 7 characters long');
     }
   };
 
   useEffect(() => {
     setError('');
+    reset();
+
     if (open) {
       // Use requestAnimationFrame to ensure DOM is ready
       const focusInput = () => {
@@ -91,12 +106,49 @@ export default function LoginWithPlayerIdDialog({ open, onClose }: LoginWithPlay
                 },
               }}
             />
-            <Button variant="contained" size="large" onClick={handlePlayerIdClick} fullWidth sx={{ mt: 4 }}>
+            <Box sx={{ mt: 3, width: '100%' }}>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={consentChecked}
+                    onChange={(e) => setConsentChecked(e.target.checked)}
+                    color="primary"
+                    sx={{
+                      mr: 2,
+                    }}
+                  />
+                }
+                label={
+                  <Typography variant="body2" sx={{ fontSize: '0.875rem' }}>
+                    I consent to my first name and last name being displayed publicly on this website in connection with
+                    tournament pairings and results. You may withdraw consent at any time by contacting us.
+                    <br />
+                    <strong>
+                      I have read and agree to the terms above and consent to my name being displayed publicly.
+                    </strong>
+                  </Typography>
+                }
+                sx={{ alignItems: 'flex-start' }}
+              />
+            </Box>
+            <Button
+              variant="contained"
+              size="large"
+              onClick={handlePlayerIdClick}
+              fullWidth
+              sx={{ mt: 3 }}
+              // disabled={!consentChecked}
+            >
               Login
             </Button>
             {error && (
               <Alert severity="error" sx={{ mt: 2 }}>
                 {error}
+              </Alert>
+            )}
+            {isError && (
+              <Alert severity="error" sx={{ mt: 2 }}>
+                There was an unexpected error logging in with your player ID. Please refresh this page and try again.
               </Alert>
             )}
           </Box>
