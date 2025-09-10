@@ -1,12 +1,19 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from '../api';
 
+export interface PlayerName {
+  first: string;
+  last: string;
+}
+
 export interface TournamentPairing {
   id: number;
   outcome: number;
   tablenumber: number;
   timestamp: string;
   player1_id: string;
+  player1_name?: PlayerName;
+  player2_name?: PlayerName;
   player2_id: string;
   round_id: number;
 }

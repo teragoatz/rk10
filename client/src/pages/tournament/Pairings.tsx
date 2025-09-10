@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import Typography from '@mui/material/Typography';
 import { TournamentPairings } from '../../hooks';
+import Match from './Match';
 
 interface PairingsProps {
   pairings: TournamentPairings[];
@@ -14,10 +14,12 @@ interface PairingsProps {
 export default function Pairings({ pairings, playerId }: PairingsProps) {
   const [activeTab, setActiveTab] = useState(0);
 
-  const pairingsWithPlayerId = playerId ? pairings.map((pairing) => ({
-    ...pairing,
-    matches: pairing.matches.filter((match) => match.player1_id === playerId || match.player2_id === playerId),
-  })) : pairings;
+  const pairingsWithPlayerId = playerId
+    ? pairings.map((pairing) => ({
+        ...pairing,
+        matches: pairing.matches.filter((match) => match.player1_id === playerId || match.player2_id === playerId),
+      }))
+    : pairings;
 
   return (
     <Box>
@@ -43,46 +45,12 @@ export default function Pairings({ pairings, playerId }: PairingsProps) {
         >
           {activeTab === index && (
             <Box>
-              <Stack direction="row" spacing={4} mb={2}>
-                <Typography variant="body1">
-                  <strong>Stage:</strong> {pairing.stage}
-                </Typography>
-                <Typography variant="body1">
-                  <strong>Time left:</strong> {pairing.timeleft}
-                </Typography>
-                <Typography variant="body1">
-                  <strong>Type:</strong> {pairing.type}
-                </Typography>
-              </Stack>
-
               <Typography variant="h6" gutterBottom>
                 Matches
               </Typography>
 
               {pairing.matches.map((match) => (
-                <Box
-                  key={`match-${match.id}`}
-                  mb={2}
-                  p={2}
-                  sx={{
-                    border: 1,
-                    borderColor: 'divider',
-                    borderRadius: 1,
-                    backgroundColor: 'background.paper',
-                  }}
-                >
-                  <Typography variant="body1" gutterBottom>
-                    <strong>{match.player1_id ?? 'TBD'}</strong> vs <strong>{match.player2_id ?? 'TBD'}</strong>
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    Table #{match.tablenumber}
-                  </Typography>
-                  {!!match.outcome && (
-                    <Typography variant="body2" color="success.main" sx={{ mt: 1 }}>
-                      <strong>Outcome:</strong> {match.outcome}
-                    </Typography>
-                  )}
-                </Box>
+                <Match key={`match-${match.id}`} match={match} />
               ))}
             </Box>
           )}

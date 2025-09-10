@@ -70,3 +70,16 @@ class Match(Base):
 
     def as_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
+class MatchOutcomeSelection(Base):
+    __tablename__ = 'match_outcome_selections'
+    id = Column(Integer, primary_key=True)
+    match_id = Column(Integer, ForeignKey('matches.id', ondelete="CASCADE"), nullable=False)
+    player_id = Column(String(20), ForeignKey('players.userid', ondelete="CASCADE"), nullable=False)
+    outcome = Column(Integer, nullable=False)
+    timestamp = Column(DateTime)
+
+    __table_args__ = (
+        # Ensure one selection per player per match
+        {'sqlite_autoincrement': True},
+    )

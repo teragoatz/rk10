@@ -52,3 +52,12 @@ CREATE TABLE IF NOT EXISTS matches (
     tablenumber INTEGER,
     timestamp TIMESTAMP
 );
+
+CREATE TABLE IF NOT EXISTS match_outcome_selections (
+    id SERIAL PRIMARY KEY,
+    match_id INTEGER REFERENCES matches(id) ON DELETE CASCADE,
+    player_id VARCHAR(20) REFERENCES players(userid) ON DELETE CASCADE,
+    outcome INTEGER,
+    timestamp TIMESTAMP DEFAULT NOW(),
+    UNIQUE(match_id, player_id)
+);

@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - 'app/**'
+      - 'client/**'
       - '.github/workflows/docker-publish.yml'
       - 'Dockerfile'
       - 'docker-compose.yml'

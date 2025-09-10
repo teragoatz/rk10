@@ -7,9 +7,10 @@ import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { useGetTournament, useGetTournamentPairings } from '../../hooks';
-import Banner from './Banner';
+// import Banner from './Banner';
 import Pairings from './Pairings';
 import { Paper } from '@mui/material';
+import { formatDate } from '../../util/dateUtil';
 
 export default function TournamentDetail() {
   const { id } = useParams();
@@ -35,9 +36,11 @@ export default function TournamentDetail() {
 
   return (
     <Box>
-      <Banner tournament={tournament} />
+      {/* <Banner tournament={tournament} /> */}
 
       <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+        <Typography variant="h2">{tournament.name}</Typography>
+        <Typography variant="h5">Start Date: {formatDate(tournament.startdate)}</Typography>
         <Box mb={4}>
           <Stack direction="column" spacing={2}>
             <Typography variant="body1">
