@@ -50,7 +50,7 @@ export default function Pairings({ pairings, playerId }: PairingsProps) {
               </Typography>
 
               {pairing.matches.map((match) => (
-                <Match key={`match-${match.id}`} match={match} />
+                <Match key={`match-${match.id}`} match={match} playerId={playerId} />
               ))}
             </Box>
           )}

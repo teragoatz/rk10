@@ -63,8 +63,8 @@ export default function Header() {
       </Paper>
 
       <AppBar position="static" elevation={1}>
-        <Container maxWidth="xl">
-          <Toolbar sx={{ justifyContent: 'space-between', py: 1 }}>
+        <Container maxWidth="lg" sx={{ padding: 0 }}>
+          <Toolbar sx={{ justifyContent: 'space-between', py: 1, px: { xs: 2, sm: 0 } }}>
             {/* Logo */}
             <Link to="/" style={{ textDecoration: 'none' }}>
               <Typography
@@ -75,13 +75,13 @@ export default function Header() {
                   color: '#1976d2',
                   letterSpacing: '-0.5px',
                   cursor: 'pointer',
-                  fontSize: { xs: '1.75rem', sm: '2.125rem' },
+                  fontSize: { xs: '1.15rem', sm: '2.125rem' },
                   '&:hover': {
                     color: '#1565c0',
                   },
                 }}
               >
-                RK10
+                SOMEONE's PC
               </Typography>
             </Link>
 
@@ -91,7 +91,7 @@ export default function Header() {
               onClick={handleSearchClick}
               startIcon={<SearchIcon />}
               sx={{
-                width: { xs: '180px', sm: '400px' },
+                width: { xs: '140px', sm: '400px' },
                 height: '40px',
                 justifyContent: 'flex-start',
                 textAlign: 'left',
