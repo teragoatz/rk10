@@ -7,7 +7,7 @@ export enum MatchOutcome {
 
 export enum MatchOutcomeColor {
   Win = 'green',
-  Loss = 'red',
+  Loss = 'white',
   Tie = 'yellow',
   Bye = 'orange',
   White = 'white',

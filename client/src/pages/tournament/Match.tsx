@@ -7,7 +7,6 @@ import Button from '@mui/material/Button';
 import Collapse from '@mui/material/Collapse';
 import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUp from '@mui/icons-material/KeyboardArrowUp';
-import Cancel from '@mui/icons-material/Cancel';
 import CheckCircle from '@mui/icons-material/CheckCircle';
 import DoDisturbOn from '@mui/icons-material/DoDisturbOn';
 import { TournamentPairing, usePostSelectOutcome } from '../../hooks';
@@ -59,14 +58,7 @@ function getMatchOutcomeIcon(player: Player, outcome: MatchOutcome) {
           }}
         />
       ) : (
-        <Cancel
-          sx={{
-            ml: 1,
-            fontSize: '1.2em',
-            color: 'red',
-            verticalAlign: 'middle',
-          }}
-        />
+        <></>
       );
     case MatchOutcome.Player2Wins:
       return player === Player.Player2 ? (
@@ -79,14 +71,7 @@ function getMatchOutcomeIcon(player: Player, outcome: MatchOutcome) {
           }}
         />
       ) : (
-        <Cancel
-          sx={{
-            ml: 1,
-            fontSize: '1.2em',
-            color: 'red',
-            verticalAlign: 'middle',
-          }}
-        />
+        <></>
       );
     case MatchOutcome.Tie:
       return (
@@ -159,26 +144,6 @@ export default function Match({ match, playerId }: MatchProps) {
         >
           {getPlayerDisplayName(Player.Player1, match)}
           {getMatchOutcomeIcon(Player.Player1, match.outcome)}
-          {/* {match.outcome === MatchOutcome.Player1Wins && (
-            <CheckCircle
-              sx={{
-                ml: 1,
-                fontSize: '1.2em',
-                color: 'green',
-                verticalAlign: 'middle',
-              }}
-            />
-          )}
-          {match.outcome === MatchOutcome.Tie && (
-            <DoDisturbOn
-              sx={{
-                ml: 1,
-                fontSize: '1.2em',
-                color: 'yellow',
-                verticalAlign: 'middle',
-              }}
-            />
-          )} */}
         </Typography>
         {match.outcome !== MatchOutcome.Bye && (
           <>
