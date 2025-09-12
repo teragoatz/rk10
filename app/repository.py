@@ -186,7 +186,7 @@ class PostgresRepository:
                         # tie
                         player_stats[p1_id]["ties"] += 1
                         player_stats[p2_id]["ties"] += 1
-                    elif outcome == 4:
+                    elif outcome == 5:
                         # BYE (player1 gets win)
                         player_stats[p1_id]["wins"] += 1
                         player_stats[p1_id]["byes"] += 1
