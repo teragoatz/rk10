@@ -20,7 +20,7 @@ export default function Home() {
   }
 
   return (
-    <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
+    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
       <Box sx={{ display: 'flex', gap: 2, mb: 3 }}>
         <Button variant={status === 'incomplete' ? 'contained' : 'outlined'} onClick={() => setStatus('incomplete')}>
           Active
