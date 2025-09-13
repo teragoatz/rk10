@@ -24,7 +24,7 @@ interface LoginWithPlayerIdDialogProps {
 export default function LoginWithPlayerIdDialog({ open, onClose }: LoginWithPlayerIdDialogProps) {
   const [inputText, setInputText] = useState('');
   const [error, setError] = useState('');
-  const [consentChecked, setConsentChecked] = useState(false);
+  const [consentChecked, setConsentChecked] = useState(true);
   const inputRef = useRef<HTMLInputElement>(null);
   const { mutateAsync: postPlayerConsent, isError, reset } = usePostPlayerConsent();
 
