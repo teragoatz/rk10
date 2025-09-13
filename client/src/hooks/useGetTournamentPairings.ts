@@ -6,7 +6,7 @@ export interface PlayerName {
   last: string;
 }
 
-export interface TournamentPairing {
+export interface IMatch {
   id: number;
   outcome: number;
   tablenumber: number;
@@ -20,7 +20,7 @@ export interface TournamentPairing {
 
 export interface TournamentPairings {
   id: number;
-  matches: TournamentPairing[];
+  matches: IMatch[];
   number: number;
   stage: number;
   timeleft: number;

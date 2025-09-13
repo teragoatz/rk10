@@ -1,21 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 import Container from '@mui/material/Container';
+import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import { useGetTournament, useGetTournamentPairings } from '../../hooks';
+import Tab from '@mui/material/Tab';
+import Tabs from '@mui/material/Tabs';
+import { useGetTournament, useGetTournamentPairings, useGetTournamentStandings } from '../../hooks';
+import { formatDate } from '../../util/dateUtil';
 // import Banner from './Banner';
 import Pairings from './Pairings';
-import { Paper } from '@mui/material';
-import { formatDate } from '../../util/dateUtil';
+import Standings from './Standings';
 
 export default function TournamentDetail() {
   const { id } = useParams();
+  const [activeTab, setActiveTab] = useState(0);
   const { data: tournament, isLoading: isLoadingTournament, isError: isErrorTournament } = useGetTournament(id);
   const { data: pairings, isLoading: isLoadingPairings, isError: isErrorPairings } = useGetTournamentPairings(id);
+  const { data: standings, isLoading: isLoadingStandings, isError: isErrorStandings } = useGetTournamentStandings(id);
   const playerId = localStorage.getItem('playerId');
 
   if (isLoadingTournament || isLoadingPairings) {
@@ -49,11 +54,31 @@ export default function TournamentDetail() {
             <Typography variant="body1">Organized by: {tournament?.organizer_name}</Typography>
           </Stack>
         </Box>
-        <Paper elevation={1} sx={{ p: 3, maxWidth: 'sm' }}>
-          <Typography variant="h4" gutterBottom>Pairings</Typography>
-          {pairings && pairings.length > 0 && (
-            <Pairings pairings={pairings} playerId={playerId} />
-          )}
+        <Paper elevation={1} sx={{ p: 3, maxWidth: 'md' }}>
+          <Tabs
+            value={activeTab}
+            onChange={(_, newValue) => setActiveTab(newValue)}
+            sx={{ borderBottom: 1, borderColor: 'divider', mb: 2 }}
+          >
+            <Tab label="Pairings" />
+            <Tab label="Standings" />
+          </Tabs>
+
+          <Box role="tabpanel" hidden={activeTab !== 0}>
+            {activeTab === 0 && (
+              <Box>
+                <Pairings pairings={pairings} playerId={playerId} isLoading={isLoadingPairings} isError={isErrorPairings} />
+              </Box>
+            )}
+          </Box>
+
+          <Box role="tabpanel" hidden={activeTab !== 1}>
+            {activeTab === 1 && (
+              <Box>
+                <Standings standings={standings ?? []} isLoading={isLoadingStandings} isError={isErrorStandings} />
+              </Box>
+            )}
+          </Box>
         </Paper>
       </Container>
     </Box>
