@@ -23,7 +23,7 @@ export default function TournamentDetail() {
   const { data: standings, isLoading: isLoadingStandings, isError: isErrorStandings } = useGetTournamentStandings(id);
   const playerId = localStorage.getItem('playerId');
 
-  if (isLoadingTournament || isLoadingPairings) {
+  if (isLoadingTournament) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
         <CircularProgress size={100} />
@@ -31,7 +31,7 @@ export default function TournamentDetail() {
     );
   }
 
-  if (isErrorTournament || isErrorPairings || !tournament || !pairings) {
+  if (isErrorTournament || !tournament) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
         <Alert severity="error">Error loading tournament with id {id}</Alert>
@@ -67,7 +67,7 @@ export default function TournamentDetail() {
           <Box role="tabpanel" hidden={activeTab !== 0}>
             {activeTab === 0 && (
               <Box>
-                <Pairings pairings={pairings} playerId={playerId} isLoading={isLoadingPairings} isError={isErrorPairings} />
+                <Pairings pairings={pairings ?? []} playerId={playerId} isLoading={isLoadingPairings} isError={isErrorPairings} />
               </Box>
             )}
           </Box>
