@@ -71,6 +71,13 @@ def get_tournament_pairings(tournament_id):
         result.append(round_dict)
     return jsonify(result)
 
+# Endpoint to get tournament standings
+@app.route('/api/tournament/<tournament_id>/standings', methods=['GET'])
+def get_tournament_standings(tournament_id):
+    repo = PostgresRepository()
+    standings = repo.get_tournament_standings(tournament_id)
+    return jsonify(standings)
+
 @app.route('/api/tournament/<tournament_id>', methods=['GET'])
 def get_tournament(tournament_id):
     repo = PostgresRepository()

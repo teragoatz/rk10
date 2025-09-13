@@ -9,7 +9,7 @@ import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUp from '@mui/icons-material/KeyboardArrowUp';
 import CheckCircle from '@mui/icons-material/CheckCircle';
 import DoDisturbOn from '@mui/icons-material/DoDisturbOn';
-import { TournamentPairing, usePostSelectOutcome } from '../../hooks';
+import { IMatch, usePostSelectOutcome } from '../../hooks';
 import { MatchOutcome, MatchOutcomeColor } from '../../util/constants';
 
 enum Player {
@@ -32,7 +32,7 @@ function getMatchOutcomeColor(player: Player, outcome: MatchOutcome): MatchOutco
   }
 }
 
-function getPlayerDisplayName(player: Player, match: TournamentPairing) {
+function getPlayerDisplayName(player: Player, match: IMatch) {
   if (player === Player.Player1) {
     if (match.player1_name && match.player1_name.first && match.player1_name.last) {
       return match.player1_name?.first + ' ' + match.player1_name?.last;
@@ -90,7 +90,7 @@ function getMatchOutcomeIcon(player: Player, outcome: MatchOutcome) {
 
 interface MatchProps {
   playerId: string | null;
-  match: TournamentPairing;
+  match: IMatch;
 }
 
 export default function Match({ match, playerId }: MatchProps) {
