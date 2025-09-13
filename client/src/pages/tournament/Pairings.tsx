@@ -14,10 +14,20 @@ interface PairingsProps {
 export default function Pairings({ pairings, playerId }: PairingsProps) {
   const [activeTab, setActiveTab] = useState(0);
 
-  const pairingsWithPlayerId = playerId
+  const pairingsSortedByPlayerId = playerId
     ? pairings.map((pairing) => ({
         ...pairing,
-        matches: pairing.matches.filter((match) => match.player1_id === playerId || match.player2_id === playerId),
+        matches: pairing.matches.sort((a, b) => {
+          const aContainsPlayer = a.player1_id === playerId || a.player2_id === playerId;
+          const bContainsPlayer = b.player1_id === playerId || b.player2_id === playerId;
+
+          // If a contains player and b doesn't, a comes first
+          if (aContainsPlayer && !bContainsPlayer) return -1;
+          // If b contains player and a doesn't, b comes first
+          if (bContainsPlayer && !aContainsPlayer) return 1;
+          // If both or neither contain player, maintain original order
+          return 0;
+        }),
       }))
     : pairings;
 
@@ -30,12 +40,12 @@ export default function Pairings({ pairings, playerId }: PairingsProps) {
         scrollButtons="auto"
         sx={{ borderBottom: 1, borderColor: 'divider', mb: 2 }}
       >
-        {pairingsWithPlayerId.map((pairing) => (
+        {pairingsSortedByPlayerId.map((pairing) => (
           <Tab key={`tab-${pairing.number}`} label={`Round ${pairing.number}`} sx={{ minWidth: 120 }} />
         ))}
       </Tabs>
 
-      {pairingsWithPlayerId.map((pairing, index) => (
+      {pairingsSortedByPlayerId.map((pairing, index) => (
         <Box
           key={`panel-${pairing.number}`}
           role="tabpanel"
