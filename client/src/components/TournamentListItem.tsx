@@ -2,6 +2,9 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import ListItem from '@mui/material/ListItem';
 import Typography from '@mui/material/Typography';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { formatDate } from '../util';
 import { Tournament } from '../hooks';
 
@@ -14,36 +17,95 @@ export default function TournamentListItem({ tournament, handleTournamentClick }
   return (
     <ListItem
       key={tournament.id}
-      onClick={() => handleTournamentClick(tournament.id)}
       sx={{
-        pt: 4,
-        pb: 4,
-        borderBottom: '1px solid #e0e0e0',
-        alignItems: 'flex-start',
-        flexDirection: 'column',
-        cursor: 'pointer',
-        borderRadius: 1,
-        transition: 'background-color 0.2s ease-in-out',
-        '&:hover': {
-          backgroundColor: 'rgba(255, 255, 255, 0.08)',
+        p: 0,
+        mb: 2,
+        '&:last-child': {
+          mb: 0,
         },
       }}
     >
-      <Box
+      <Card
+        onClick={() => handleTournamentClick(tournament.id)}
         sx={{
-          mb: 3,
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
           width: '100%',
+          cursor: 'pointer',
+          borderRadius: 2,
+          border: '1px solid #e0e0e0',
+          boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+          transition: 'all 0.2s ease-in-out',
+          '&:hover': {
+            boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+            borderColor: '#1976d2',
+            transform: 'translateY(-2px)',
+          },
+          '&:focus': {
+            outline: '2px solid #1976d2',
+            outlineOffset: '2px',
+          },
+          '&:active': {
+            transform: 'translateY(0)',
+            boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+          },
+        }}
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            handleTournamentClick(tournament.id);
+          }
         }}
       >
-        <Typography variant="h3">{tournament.name}</Typography>
-        <Typography variant="h4">{formatDate(tournament.startdate)}</Typography>
-      </Box>
-      <Typography variant="body1">
-        {tournament.city}, {tournament.state}, {tournament.country}
-      </Typography>
+        <CardContent sx={{ p: 2, '&:last-child': { pb: 2 } }}>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              width: '100%',
+              mb: 1,
+            }}
+          >
+            <Typography
+              variant="h5"
+              sx={{
+                fontWeight: 600,
+                color: 'text.primary',
+                flex: 1,
+                mr: 2,
+              }}
+            >
+              {tournament.name}
+            </Typography>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <Typography
+                variant="body1"
+                sx={{
+                  color: 'text.secondary',
+                  fontWeight: 500,
+                }}
+              >
+                {formatDate(tournament.startdate)}
+              </Typography>
+              <ChevronRightIcon
+                sx={{
+                  color: 'text.secondary',
+                  fontSize: '1.2rem',
+                }}
+              />
+            </Box>
+          </Box>
+          <Typography
+            variant="body2"
+            sx={{
+              color: 'text.secondary',
+              fontSize: '0.95rem',
+            }}
+          >
+            {tournament.city}, {tournament.state}, {tournament.country}
+          </Typography>
+        </CardContent>
+      </Card>
     </ListItem>
   );
 }
