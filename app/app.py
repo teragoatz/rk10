@@ -35,11 +35,11 @@ def update_data():
 
 @socketio.on('connect')
 def handle_connect():
-    print('Client connected')
+    print('Client connected', flush=True)
 
 @socketio.on('disconnect')
 def handle_disconnect():
-    print('Client disconnected')
+    print('Client disconnected', flush=True)
 
 @app.route('/api/upload-tdf', methods=['POST'])
 def upload_tdf():
