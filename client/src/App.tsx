@@ -39,6 +39,12 @@ const theme = createTheme({
         fontSize: '3.75rem',
       },
     },
+    h5: {
+      fontSize: '1.25rem',
+      '@media (min-width:600px)': {
+        fontSize: '2.5rem',
+      },
+    },
   },
 });
 
