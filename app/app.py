@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, request
+from flask_socketio import SocketIO, emit
 from flask_cors import CORS
 import psycopg2
 from datetime import datetime
@@ -15,6 +16,7 @@ if os.getenv("DEBUG_ENABLED") == "1":
     # debugpy.wait_for_client()
 
 app = Flask(__name__)
+socketio = SocketIO(app, cors_allowed_origins="*")  # Allow frontend connections
 
 CLIENT_URL = os.getenv("RK10_CLIENT_URL", "http://localhost:3000")
 CORS(app, resources={r"/*": {"origins": [CLIENT_URL]}})
@@ -24,6 +26,20 @@ ALLOWED_EXTENSIONS = {'tdf'}
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+@app.route('/update', methods=['POST'])
+def update_data():
+    # ... update logic ...
+    socketio.emit('data_updated', {'message': 'Data has been updated'})
+    return {'status': 'ok'}
+
+@socketio.on('connect')
+def handle_connect():
+    print('Client connected')
+
+@socketio.on('disconnect')
+def handle_disconnect():
+    print('Client disconnected')
 
 @app.route('/api/upload-tdf', methods=['POST'])
 def upload_tdf():
@@ -40,6 +56,9 @@ def upload_tdf():
         repo = PostgresRepository()
         ingest = TdfIngest(repo)
         ingest.ingest(file_content)
+
+        # Emit update event to frontend
+        socketio.emit('data_updated', {'message': 'Data has been updated'})
 
         return jsonify({"message": f"Received {filename}"}), 200
     else:
@@ -168,4 +187,4 @@ def hello_world():
     })
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    socketio.run(app, host='0.0.0.0', port=5000)
