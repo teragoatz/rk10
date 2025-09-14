@@ -71,6 +71,13 @@ def get_tournament_pairings(tournament_id):
         result.append(round_dict)
     return jsonify(result)
 
+# Endpoint to get tournament standings
+@app.route('/api/tournament/<tournament_id>/standings', methods=['GET'])
+def get_tournament_standings(tournament_id):
+    repo = PostgresRepository()
+    standings = repo.get_tournament_standings(tournament_id)
+    return jsonify(standings)
+
 @app.route('/api/tournament/<tournament_id>', methods=['GET'])
 def get_tournament(tournament_id):
     repo = PostgresRepository()
@@ -104,6 +111,24 @@ def set_player_consent(player_id):
     repo = PostgresRepository()
     player = repo.set_player_consent(player_id, consent=bool(consent))
     return jsonify({"message": f"Updated consent for {player_id}"}), 200
+
+@app.route('/api/match/<int:match_id>/select-outcome', methods=['POST'])
+def select_match_outcome(match_id):
+    data = request.get_json()
+    player_id = data.get('player_id')
+    outcome = data.get('outcome')
+    if not player_id or outcome is None:
+        return jsonify({"error": "player_id and outcome required"}), 400
+
+    repo = PostgresRepository()
+    try:
+        both_agree, agreed_outcome = repo.select_match_outcome(match_id, player_id, outcome)
+        if both_agree:
+            return jsonify({"message": "Outcome set!", "outcome": agreed_outcome}), 200
+        else:
+            return jsonify({"message": "Selection recorded. Waiting for other player."}), 202
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 # Database connection
 def get_db_connection():

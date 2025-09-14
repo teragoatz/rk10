@@ -1,19 +1,26 @@
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
+import axios from '../api';
 
-export interface TournamentPairing {
+export interface PlayerName {
+  first: string;
+  last: string;
+}
+
+export interface IMatch {
   id: number;
   outcome: number;
   tablenumber: number;
   timestamp: string;
   player1_id: string;
+  player1_name?: PlayerName;
+  player2_name?: PlayerName;
   player2_id: string;
   round_id: number;
 }
 
 export interface TournamentPairings {
   id: number;
-  matches: TournamentPairing[];
+  matches: IMatch[];
   number: number;
   stage: number;
   timeleft: number;
