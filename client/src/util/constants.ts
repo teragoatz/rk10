@@ -12,3 +12,5 @@ export enum MatchOutcomeColor {
   Bye = 'orange',
   White = 'white',
 }
+
+export const SERVER_URI = process.env.REACT_APP_SERVER_URI ?? '';

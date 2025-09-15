@@ -38,7 +38,7 @@ services:
     env_file:
       - .env
     environment:
-      - REACT_APP_SOCKET_ADDRESS=http://localhost
+      - REACT_APP_SERVER_URI=http://localhost
     depends_on:
       - app
 

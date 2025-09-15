@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_TOKEN = process.env.REACT_APP_API_TOKEN; // Replace with your actual token, or load from env/config
+const API_TOKEN = process.env.REACT_APP_API_TOKEN;
 
 axios.interceptors.request.use(config => {
     if (config.url?.startsWith('/api/')) {

@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from '../api';
 import { useEffect } from 'react';
-import { socket } from '../util';
+import { socket, SERVER_URI } from '../util';
 
 export interface PlayerName {
   first: string;
@@ -31,8 +31,7 @@ export interface TournamentPairings {
 }
 
 async function getTournamentPairings(tournamentId: string): Promise<TournamentPairings[]> {
-  const response = await axios.get(`/api/tournament/${tournamentId}/pairings`);
-  // const response = await axios.get(`http://localhost:5000/api/tournament/${tournamentId}/pairings`);
+  const response = await axios.get(`${SERVER_URI}/api/tournament/${tournamentId}/pairings`);
   return response.data;
 }
 
