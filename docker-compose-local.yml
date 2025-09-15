@@ -37,6 +37,8 @@ services:
       - "80:80"
     env_file:
       - .env
+    environment:
+      - REACT_APP_SERVER_URI=http://localhost
     depends_on:
       - app
 

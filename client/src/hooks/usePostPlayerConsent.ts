@@ -1,5 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import axios from '../api';
+import { SERVER_URI } from '../util';
 
 export interface PlayerConsentPayload {
   playerId: number;
@@ -8,8 +9,7 @@ export interface PlayerConsentPayload {
 
 async function postPlayerConsent(payload: PlayerConsentPayload): Promise<string> {
   const { playerId, consent } = payload;
-  const response = await axios.post(`/api/player/${playerId}/consent`, { consent });
-  // const response = await axios.post(`http://localhost:5000/api/player/${playerId}/consent`, { consent });
+  const response = await axios.post(`${SERVER_URI}/api/player/${playerId}/consent`, { consent });
   return response.data;
 }
 

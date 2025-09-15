@@ -42,7 +42,6 @@ export default function TournamentDetail() {
   return (
     <Box>
       {/* <Banner tournament={tournament} /> */}
-
       <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
         <Typography variant="h2" sx={{ mb: 2 }}>{tournament.name}</Typography>
         <Typography variant="h5">{formatDate(tournament.startdate)}</Typography>

@@ -1,6 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import axios from '../api';
 import { MatchOutcome } from '../util/constants';
+import { SERVER_URI } from '../util';
 
 export interface SelectOutcomePayload {
   match_id: number;
@@ -10,8 +11,7 @@ export interface SelectOutcomePayload {
 
 async function postSelectOutcome(payload: SelectOutcomePayload): Promise<string> {
   const { match_id, player_id, outcome } = payload;
-  const response = await axios.post(`/api/match/${match_id}/select-outcome`, { player_id, outcome });
-  // const response = await axios.post(`http://localhost:5000/api/match/${match_id}/select-outcome`, { player_id, outcome });
+  const response = await axios.post(`${SERVER_URI}/api/match/${match_id}/select-outcome`, { player_id, outcome });
   return response.data;
 }
 
