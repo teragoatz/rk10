@@ -84,7 +84,7 @@
 							<timestamp>09/02/2025 10:22:35</timestamp>
 							<tablenumber>0</tablenumber>
 						</match>
-						<match outcome="2">
+						<match outcome="1">
 							<player1 userid="1234511"/>
 							<player2 userid="1234569"/>
 							<timestamp>09/02/2025 12:04:28</timestamp>
