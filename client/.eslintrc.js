@@ -6,7 +6,6 @@ module.exports = {
     ecmaFeatures: {
       jsx: true,
     },
-    project: './tsconfig.json',
     extraFileExtensions: ['.webp', '.sql'],
   },
   plugins: ['import', 'json'],
@@ -37,7 +36,7 @@ module.exports = {
     quotes: [2, 'single', { avoidEscape: true }],
     '@typescript-eslint/no-unused-vars': ['error', { 'vars': 'all', 'args': 'after-used', 'argsIgnorePattern': '^_' }],
     '@typescript-eslint/no-var-requires': 'off',
-    '@typescript-eslint/no-empty-interface': ["error", { "allowSingleExtends": true }],
+    '@typescript-eslint/no-empty-interface': ['error', { 'allowSingleExtends': true }],
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
     'react/prop-types': 'off',
