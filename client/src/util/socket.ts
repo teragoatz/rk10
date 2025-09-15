@@ -1,4 +1,4 @@
 import { io } from 'socket.io-client';
-import { SERVER_URI } from './constants';
 
-export const socket = io(`${SERVER_URI}/`);
+const socketAddress = process.env.REACT_APP_SOCKET_ADDRESS ?? '';
+export const socket = io(`${socketAddress}/`);
