@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Alert from '@mui/material/Alert';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
@@ -34,6 +34,12 @@ export default function Pairings({ pairings, playerId, isLoading, isError }: Pai
         }),
       }))
     : pairings;
+
+  useEffect(() => {
+    if (pairingsSortedByPlayerId.length > 0) {
+      setActiveTab(pairingsSortedByPlayerId.length - 1);
+    }
+  }, [pairingsSortedByPlayerId.length]);
 
   if (isLoading) {
     return (
