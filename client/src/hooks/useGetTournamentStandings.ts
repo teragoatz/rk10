@@ -1,5 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from '../api';
+import { useEffect } from 'react';
+import { socket } from '../util';
 
 export interface TournamentStanding {
   player_id: string;
@@ -19,7 +21,7 @@ async function getTournamentStandings(tournamentId: string): Promise<TournamentS
 }
 
 export function useGetTournamentStandings(tournamentId?: string) {
-  return useQuery<TournamentStanding[] | undefined, Error>({
+  const getTournamentStandingsQuery = useQuery<TournamentStanding[] | undefined, Error>({
     queryKey: ['tournamentStandings', tournamentId],
     queryFn: () => {
       if (!tournamentId) {
@@ -30,4 +32,19 @@ export function useGetTournamentStandings(tournamentId?: string) {
     },
     enabled: !!tournamentId,
   });
+
+  useEffect(() => {
+    if (tournamentId) {
+      socket.on('data_updated', () => getTournamentStandingsQuery.refetch());
+    }
+
+    return () => {
+      if (tournamentId) {
+        socket.off('data_updated');
+      }
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tournamentId]);
+
+  return getTournamentStandingsQuery;
 }

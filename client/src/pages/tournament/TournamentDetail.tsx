@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useWebSocketUpdates } from '../../hooks/useWebSocketUpdates';
 import { useParams } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
@@ -20,11 +19,7 @@ export default function TournamentDetail() {
   const { id } = useParams();
   const [activeTab, setActiveTab] = useState(0);
   const { data: tournament, isLoading: isLoadingTournament, isError: isErrorTournament } = useGetTournament(id);
-  const { data: pairings, isLoading: isLoadingPairings, isError: isErrorPairings, refetch: refetchPairings } = useGetTournamentPairings(id);
-  // Auto-refresh pairings on backend data update
-  useWebSocketUpdates(() => {
-    refetchPairings();
-  });
+  const { data: pairings, isLoading: isLoadingPairings, isError: isErrorPairings } = useGetTournamentPairings(id);
   const { data: standings, isLoading: isLoadingStandings, isError: isErrorStandings } = useGetTournamentStandings(id);
   const playerId = localStorage.getItem('playerId');
 

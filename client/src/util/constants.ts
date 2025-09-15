@@ -12,3 +12,5 @@ export enum MatchOutcomeColor {
   Bye = 'orange',
   White = 'white',
 }
+
+export const SERVER_URI = process.env.SERVER_URI || 'http://localhost';
