@@ -59,6 +59,7 @@ export default function LoginWithPlayerIdDialog({ open, onClose }: LoginWithPlay
 
       requestAnimationFrame(focusInput);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
   return (
