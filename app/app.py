@@ -143,6 +143,9 @@ def select_match_outcome(match_id):
     try:
         both_agree, agreed_outcome = repo.select_match_outcome(match_id, player_id, outcome)
         if both_agree:
+            # Emit update event to frontend
+            socketio.emit('data_updated', {'message': 'Data has been updated'})
+
             return jsonify({"message": "Outcome set!", "outcome": agreed_outcome}), 200
         else:
             return jsonify({"message": "Selection recorded. Waiting for other player."}), 202
