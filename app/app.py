@@ -1,16 +1,16 @@
+import eventlet
+eventlet.monkey_patch()
+
 from flask import Flask, jsonify, request
 from flask_socketio import SocketIO, emit
 from flask_cors import CORS
 import psycopg2
 from datetime import datetime
-import eventlet
 import os
 from werkzeug.utils import secure_filename
 from models import Match, Player, Round, Tournament
 from tdf_ingest import TdfIngest
 from repository import PostgresRepository
-
-eventlet.monkey_patch()
 
 if os.getenv("DEBUG_ENABLED") == "1":
     import debugpy
