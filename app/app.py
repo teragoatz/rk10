@@ -16,7 +16,7 @@ if os.getenv("DEBUG_ENABLED") == "1":
     # debugpy.wait_for_client()
 
 app = Flask(__name__)
-socketio = SocketIO(app, cors_allowed_origins="*")  # Allow frontend connections
+socketio = SocketIO(app, async_mode='eventlet', cors_allowed_origins="*")  # Allow frontend connections
 
 CLIENT_URL = os.getenv("RK10_CLIENT_URL", "http://localhost:3000")
 CORS(app, resources={r"/*": {"origins": [CLIENT_URL]}})
