@@ -3,9 +3,12 @@ export function formatDate(date: string) {
   const currentYear = new Date().getFullYear();
   const dateYear = dateObj.getFullYear();
   
-  return dateObj.toLocaleDateString('en-US', {
+  const formatted = dateObj.toLocaleDateString('en-US', {
     month: 'short',
     day: 'numeric',
     ...(dateYear !== currentYear && { year: 'numeric' }),
+    timeZone: 'UTC',
   });
+
+  return formatted;
 }
